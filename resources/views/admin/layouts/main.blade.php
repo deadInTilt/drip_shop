@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -154,7 +156,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
+                        <a href="{{ route('admin.product.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tshirt"></i>
                             <p>
                                 Товары
@@ -218,7 +220,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Korzina &copy; 2025</strong>
+        <strong>Drip Shop &copy; 2025</strong>
         <div class="float-right d-none d-sm-inline-block">
             <b>All rights reserved.</b>
         </div>
@@ -232,6 +234,16 @@
 </div>
 <!-- ./wrapper -->
 
+
+<!-- Select2 -->
+<script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+
+<script>
+    jQuery(function () {
+        //Initialize Select2 Elements
+        $('.tags').select2()
+    }
+</script>
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->

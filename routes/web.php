@@ -79,4 +79,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
         Route::patch('/{role}', 'UpdateController')->name('admin.role.update');
         Route::delete('/{role}', 'DeleteController')->name('admin.role.delete');
     });
+
+    Route::group(['namespace' => 'Product', 'prefix' => 'products'], function () {
+        Route::get('/', 'IndexController')->name('admin.product.index');
+        Route::get('/create', 'CreateController')->name('admin.product.create');
+        Route::post('/', 'StoreController')->name('admin.product.store');
+        Route::get('/{product}', 'ShowController')->name('admin.product.show');
+        Route::get('/{product}/edit', 'EditController')->name('admin.product.edit');
+        Route::patch('/{product}', 'UpdateController')->name('admin.product.update');
+        Route::delete('/{product}', 'DeleteController')->name('admin.product.delete');
+    });
 });
