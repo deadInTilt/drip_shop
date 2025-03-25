@@ -28,4 +28,14 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
+
+    public function color(): BelongsTo
+    {
+        return $this->belongsTo(Color::class, 'color_id', 'id');
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        return url('/storage/' . $this->preview_image);
+    }
 }

@@ -16,18 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'], function () {
     Route::get('/', [\App\Http\Controllers\Admin\Main\IndexController::class, 'index'])->name('admin.main.index');
-
-//    Route::group(['namespace' => 'Product', 'prefix' => 'product'], function () {
-//        Route::get('/', 'IndexController')->name('admin.product.index');
-//        Route::get('/create', 'CreateController')->name('admin.product.create');
-//        Route::post('/', 'StoreController')->name('admin.product.store');
-//        Route::get('/{product}', 'ShowController')->name('admin.product.show');
-//        Route::get('/{product}/edit', 'StoreController')->name('admin.product.edit');
-//        Route::patch('/{product}', 'UpdateController')->name('admin.product.update');
-//        Route::delete('/{product}', 'DeleteController')->name('admin.product.delete');
-//    });
 
     Route::group(['namespace' => 'Category', 'prefix' => 'categories'], function () {
         Route::get('/', 'IndexController')->name('admin.category.index');
@@ -88,5 +80,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
         Route::get('/{product}/edit', 'EditController')->name('admin.product.edit');
         Route::patch('/{product}', 'UpdateController')->name('admin.product.update');
         Route::delete('/{product}', 'DeleteController')->name('admin.product.delete');
+    });
+
+    Route::group(['namespace' => 'Color', 'prefix' => 'colors'], function () {
+        Route::get('/', 'IndexController')->name('admin.color.index');
+        Route::get('/create', 'CreateController')->name('admin.color.create');
+        Route::post('/', 'StoreController')->name('admin.color.store');
+        Route::get('/{color}', 'ShowController')->name('admin.color.show');
+        Route::get('/{color}/edit', 'EditController')->name('admin.color.edit');
+        Route::patch('/{color}', 'UpdateController')->name('admin.color.update');
+        Route::delete('/{color}', 'DeleteController')->name('admin.color.delete');
     });
 });

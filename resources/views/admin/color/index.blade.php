@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Пользователи</h1>
+                        <h1 class="m-0">Цвета</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -27,43 +27,31 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <a href="{{ route('admin.user.create') }}" class="btn btn-primary">Создать</a>
+                                    <a href="{{ route('admin.color.create') }}" class="btn btn-primary">Создать</a>
                                 </div>
                                 <div class="card-body table-responsive p-0">
                                     <table class="table table-hover text-nowrap">
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Имя</th>
-                                            <th>Фамилия</th>
-                                            <th>Отчество</th>
-                                            <th>Пол</th>
-                                            <th>Возраст</th>
-                                            <th>Почта</th>
-                                            <th>Мобильный номер телефона</th>
-                                            <th>Роль</th>
-                                            <th>Адрес</th>
+                                            <th>Наименование</th>
+                                            <th>Цвет</th>
                                             <th>Дата создания</th>
                                             <th>Дата обновления</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($users as $user)
+                                        @foreach($colors as $color)
                                             <tr>
-                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $color->id }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.user.show', $user->id) }}">{{ $user->name }}</a>
+                                                    <a href="{{ route('admin.color.show', $color->id) }}">{{ $color->title }}</a>
                                                 </td>
-                                                <td>{{ $user->surname }}</td>
-                                                <td>{{ $user->patronymic }}</td>
-                                                <td>{{ ($user['gender'] ? $user->genderTitle : 'Не указано') }}</td>
-                                                <td>{{ $user->age }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ $user['role_id'] ? $user->role->title : 'Не указано'}}</td>
-                                                <td>{{ $user->address }}</td>
-                                                <td>{{ $user->created_at }}</td>
-                                                <td>{{ $user->updated_at }}</td>
+                                                <td>
+                                                    <div style="width: 16px; height: 16px; background: {{ '#' . $color->color }}; border: 1px solid #000"></div>
+                                                </td>
+                                                <td>{{ $color->created_at }}</td>
+                                                <td>{{ $color->updated_at }}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>

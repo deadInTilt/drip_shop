@@ -68,6 +68,12 @@
                                                 <td>{{ $product->category->title }}</td>
                                             </tr>
                                             <tr>
+                                                <td><strong>Цвет</strong></td>
+                                                <td>
+                                                    <div style="width: 16px; height: 16px; background: {{ '#' . ($product->color_id ? $product->color->color : 'Не указан') }}; border: 1px solid #000"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td><strong>Теги</strong></td>
                                                 <td>{{ $product->tags->pluck('title')->implode(', ') }}</td>
                                             </tr>

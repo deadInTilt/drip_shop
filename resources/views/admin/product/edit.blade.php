@@ -78,6 +78,17 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <select name="color_id" class="custom-select form-control-border" id="exampleSelectBorder">
+                                        <option disabled selected>Выберите цвет</option>
+                                        @foreach($colors as $color)
+                                            <option {{ $product->color_id == $color->id ? ' selected' : '' }} value="{{ $color->id }}">{{ $color->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('color_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label>Теги</label>
                                     <select name="tags_ids[]" class="tags" multiple="multiple" data-placeholder="Выберите тег" style="width: 100%;">
                                         @foreach($tags as $tag)

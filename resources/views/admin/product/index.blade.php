@@ -40,6 +40,7 @@
                                             <th>Цена</th>
                                             <th>Остаток</th>
                                             <th>Категория</th>
+                                            <th>Цвет</th>
                                             <th>Теги</th>
                                             <th>Изображение</th>
                                             <th>Дата создания</th>
@@ -58,6 +59,9 @@
                                                 <td>{{ $product->price }}</td>
                                                 <td>{{ $product->quantity }}</td>
                                                 <td>{{ $product->category->title }}</td>
+                                                <td>
+                                                    <div style="width: 16px; height: 16px; background: {{ '#' . ($product->color_id ? $product->color->color : 'Не указан') }}; border: 1px solid #000"></div>
+                                                </td>
                                                 <td>{{ $product->tags->pluck('title')->implode(', ') }}</td>
                                                 <td>{{ $product->preview_image }}</td>
                                                 <td>{{ $product->created_at }}</td>

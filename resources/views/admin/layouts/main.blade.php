@@ -180,6 +180,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('admin.color.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>
+                                Цвета
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('admin.user.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
