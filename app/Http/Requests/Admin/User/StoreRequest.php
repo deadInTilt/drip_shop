@@ -31,8 +31,6 @@ class StoreRequest extends FormRequest
             'gender' => 'nullable|integer',
             'role_id' => 'required|integer',
             'email' => 'required|string|email',
-            'password' => 'required|string|confirmed',
-            'password_confirmation' => 'required|string|same:password',
         ];
     }
 }

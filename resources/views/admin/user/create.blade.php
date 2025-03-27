@@ -93,15 +93,6 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="password" class="form-control" placeholder="Пароль" value="{{ old('password') }}">
-                                    @error('password')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="password_confirmation" class="form-control" placeholder="Подтвердите пароль" value="{{ old('password_confirmation') }}">
-                                </div>
-                                <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="Создать">
                                 </div>
                             </form>
