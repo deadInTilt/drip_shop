@@ -40,6 +40,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
+    public function hasRole($role): bool
+    {
+        return $this->role->title === $role;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
