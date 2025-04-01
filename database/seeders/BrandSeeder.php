@@ -12,6 +12,9 @@ class BrandSeeder extends Seeder
         Brand::insert([
             ['title' => 'Nike', 'description' => 'Nike'],
             ['title' => 'Adidas', 'description' => 'Adidas'],
+            ['title' => 'New Balance', 'description' => 'New Balance'],
+            ['title' => 'Puma', 'description' => 'Puma'],
+            ['title' => 'Reebok', 'description' => 'Reebok'],
         ]);
     }
 }

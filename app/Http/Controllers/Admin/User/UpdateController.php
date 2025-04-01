@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\Helpers\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Models\User;
@@ -16,7 +17,10 @@ class UpdateController extends Controller
             $data = $request->validated();
             $user->update($data);
 
+            LogHelper::logInfo('Пользователь {id} обновлен', ['id' => $request->user()->id]);
+
             return view('admin.user.show', compact('user'));
+
         }
         catch (QueryException $queryException) {
             return back()->withErrors('Ошибка базы данных: ' . $queryException->getMessage());

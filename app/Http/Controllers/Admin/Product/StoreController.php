@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use App\Helpers\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\StoreRequest;
 use App\Models\Product;
@@ -15,12 +16,13 @@ class StoreController extends Controller
     {
         $data = $request->validated();
 
+        $tagsIds = $data['tags_ids'];
+        unset($data['tags_ids']);
+
+        $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
+
         try {
             DB::beginTransaction();
-                $tagsIds = $data['tags_ids'];
-                unset($data['tags_ids']);
-
-                $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
 
                 $product = Product::firstOrCreate([
                     'title' => $data['title']
@@ -34,7 +36,7 @@ class StoreController extends Controller
         }
         catch (\Exception $exception){
             DB::rollBack();
-            Log::error('Ошибка в методе store: ' . $exception->getMessage(), [
+            LogHelper::logError('Ошибка при создании товара: ' . $exception->getMessage(), [
                 'exception' => $exception,
             ]);
             abort(500);
