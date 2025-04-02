@@ -14,14 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -29,6 +21,32 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth']], function () {
+
+    Route::get('/', function () {
+        return redirect()->route('shop.home.index');
+    });
+
+    Route::group(['namespace' => 'Home', 'prefix' => 'home', 'middleware' => ['auth']], function () {
+        Route::get('/', 'IndexController')->name('shop.home.index');
+    });
+
+    Route::group(['namespace' => 'Catalog', 'prefix' => 'catalog', 'middleware' => ['auth']], function () {
+        Route::get('/', 'IndexController')->name('shop.catalog.index');
+    });
+
+    Route::group(['namespace' => 'Cart', 'prefix' => 'cart', 'middleware' => ['auth']], function () {
+        Route::get('/', 'IndexController')->name('shop.cart.index');
+    });
+
+});
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
     Route::get('/', [\App\Http\Controllers\Admin\Main\IndexController::class, 'index'])->name('admin.main.index');

@@ -141,7 +141,7 @@ DataTable.ext.buttons.print = {
 		if (! win) {
 			dt.buttons.info(
 				dt.i18n( 'buttons.printErrorTitle', 'Unable to open print view' ),
-				dt.i18n( 'buttons.printErrorMsg', 'Please allow popups in your browser for this site to be able to view the print view.' ),
+				dt.i18n( 'buttons.printErrorMsg', 'Please allow popups in your browser for this shop to be able to view the print view.' ),
 				5000
 			);
 
