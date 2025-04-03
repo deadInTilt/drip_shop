@@ -68,6 +68,10 @@
                                                 <td>{{ $product->category->title }}</td>
                                             </tr>
                                             <tr>
+                                                <td><strong>Группа</strong></td>
+                                                <td>{{ $product->group_id ? $product->group->title : 'Не задана' }}</td>
+                                            </tr>
+                                            <tr>
                                                 <td><strong>Цвет</strong></td>
                                                 <td>
                                                     <div style="width: 16px; height: 16px; background: {{ '#' . ($product->color_id ? $product->color->color : 'Не указан') }}; border: 1px solid #000"></div>

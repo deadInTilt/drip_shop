@@ -77,6 +77,17 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <select name="group_id" class="custom-select form-control-border" id="exampleSelectBorder">
+                                        <option disabled selected>Выберите группу</option>
+                                        @foreach($groups as $group)
+                                            <option {{ old('group_id') == $group->id ? ' selected' : '' }} value="{{ $group->id }}">{{ $group->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('group_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <select name="category_id" class="custom-select form-control-border" id="exampleSelectBorder">
                                         <option disabled selected>Выберите Цвет</option>
                                         @foreach($colors as $color)

@@ -163,6 +163,14 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
+                        <a href="{{ route('shop.home.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Сайт
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="pages/gallery.html" class="nav-link">
                             <i class="nav-icon fas fa-shopping-bag"></i>
                             <p>
@@ -215,6 +223,14 @@
                             <i class="nav-icon fas fa-copyright"></i>
                             <p>
                                 Бренды
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.group.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tasks"></i>
+                            <p>
+                                Группы
                             </p>
                         </a>
                     </li>

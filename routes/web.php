@@ -49,7 +49,7 @@ Route::get('/dashboard', function () {
 
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
-    Route::get('/', [\App\Http\Controllers\Admin\Main\IndexController::class, 'index'])->name('admin.main.index');
+    Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin.index');
 
     Route::group(['namespace' => 'Category', 'prefix' => 'categories'], function () {
         Route::get('/', 'IndexController')->name('admin.category.index');
@@ -120,5 +120,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::get('/{color}/edit', 'EditController')->name('admin.color.edit');
         Route::patch('/{color}', 'UpdateController')->name('admin.color.update');
         Route::delete('/{color}', 'DeleteController')->name('admin.color.delete');
+    });
+
+    Route::group(['namespace' => 'Group', 'prefix' => 'groups'], function () {
+        Route::get('/', 'IndexController')->name('admin.group.index');
+        Route::get('/create', 'CreateController')->name('admin.group.create');
+        Route::post('/', 'StoreController')->name('admin.group.store');
+        Route::get('/{group}', 'ShowController')->name('admin.group.show');
+        Route::get('/{group}/edit', 'EditController')->name('admin.group.edit');
+        Route::patch('/{group}', 'UpdateController')->name('admin.group.update');
+        Route::delete('/{group}', 'DeleteController')->name('admin.group.delete');
     });
 });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Group;
 use App\Models\Product;
 use App\Models\Tag;
 
@@ -19,7 +20,8 @@ class EditController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $colors = Color::all();
+        $groups = Group::all();
 
-        return view('admin.product.edit', compact('product','tags', 'categories', 'brands', 'colors'));
+        return view('admin.product.edit', compact('product','tags', 'categories', 'brands', 'colors', 'groups'));
     }
 }

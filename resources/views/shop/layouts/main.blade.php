@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="{{ asset('shop/css/plugin/animate.css') }}">
     <!-- Style Css -->
     <link rel="stylesheet" href="{{ asset('shop/css/style.css') }}">
-
 </head>
 
 <body>
@@ -153,7 +152,7 @@
                     <div class="col-4 text-end">
                         <div class="right d-flex align-items-center justify-content-end">
                             <ul class="main-menu__widge-box d-flex align-items-center ">
-                                <li class="d-lg-block d-none"><a href="my-account.html"><i
+                                <li class="d-lg-block d-none"><a href="{{ route('admin.index') }}"><i
                                             class="flaticon-user"></i> </a></li>
                                 <li class="d-lg-block d-none"><a href="wishlist.html" class="number"> <i
                                             class="flaticon-heart"></i> </a> </li>

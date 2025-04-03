@@ -29,6 +29,7 @@ class UpdateRequest extends FormRequest
             'brand_id' => 'required|integer',
             'color_id' => 'nullable|integer',
             'category_id' => 'nullable|integer',
+            'group_id' => 'nullable|integer',
             'tags_ids' => 'nullable|array',
             'preview_image' => 'nullable',
         ];

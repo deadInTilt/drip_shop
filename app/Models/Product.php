@@ -38,4 +38,9 @@ class Product extends Model
     {
         return url('/storage/' . $this->preview_image);
     }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
 }
