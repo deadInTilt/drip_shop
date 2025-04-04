@@ -64,8 +64,8 @@
                                     <div class="checkbox-item">
                                         <form>
                                             @foreach($categories as $category)
-                                            <div class="form-group"> <input type="checkbox" id="bedroom"> <label
-                                                    for="bedroom">{{ $category->title }}</label>
+                                            <div class="form-group"> <input type="checkbox" id="{{ $category->id }}"> <label
+                                                    for="{{ $category->id }}">{{ $category->title }}</label>
                                             </div>
                                             @endforeach
                                         </form>
@@ -74,29 +74,20 @@
                                 <div class="single-sidebar-box mt-30 wow fadeInUp animated">
                                     <h4>Цвет </h4>
                                     <ul class="color-option">
-                                        <li> <a href="#0" class="color-option-single"> <span> Black</span> </a> </li>
-                                        <li> <a href="#0" class="color-option-single bg2"> <span> Yellow</span> </a>
+                                        @foreach($colors as $color)
+                                        <li>
+                                            <a href="#0" class="color-option-single" style="background: {{ '#' . $color->color }}; border: 1px solid #000"> <span> {{ $color->title }}</span> </a>
                                         </li>
-                                        <li> <a href="#0" class="color-option-single bg3"> <span> Red</span> </a> </li>
-                                        <li> <a href="#0" class="color-option-single bg4"> <span> Blue</span> </a> </li>
-                                        <li> <a href="#0" class="color-option-single bg5"> <span> Green</span> </a>
-                                        </li>
-                                        <li> <a href="#0" class="color-option-single bg6"> <span> Olive</span> </a>
-                                        </li>
-                                        <li> <a href="#0" class="color-option-single bg7"> <span> Lime</span> </a> </li>
-                                        <li> <a href="#0" class="color-option-single bg8"> <span> Pink</span> </a> </li>
-                                        <li> <a href="#0" class="color-option-single bg9"> <span> Cyan</span> </a> </li>
-                                        <li> <a href="#0" class="color-option-single bg10"> <span> Magenta</span> </a>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                                 <div class="single-sidebar-box mt-30 wow fadeInUp animated">
                                     <h4>Цена</h4>
                                     <div class="slider-box">
                                         <div id="price-range" class="slider"></div>
-                                        <div class="output-price"> <label for="priceRange">Price:</label> <input
+                                        <div class="output-price"> <label for="priceRange">Цена:</label> <input
                                                 type="text" id="priceRange" readonly> </div> <button class="filterbtn"
-                                                                                                     type="submit"> Filter </button>
+                                                                                                     type="submit"> Фильтр </button>
                                     </div>
                                 </div>
                                 <div class="single-sidebar-box mt-30 wow fadeInUp animated pb-0 border-bottom-0">
