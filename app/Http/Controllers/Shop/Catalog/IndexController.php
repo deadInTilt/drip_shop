@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers\Shop\Catalog;
 
-use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Group;
-use App\Models\Product;
-use App\Models\Tag;
+use App\Http\Filters\CatalogFilter;
+use App\Services\Logger\FileLogger;
+use App\Services\Shop\Catalog\CatalogService;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class IndexController extends AbstractCatalogController
 {
+    protected CatalogService $catalog;
+    public function __construct(CatalogService $catalog, FileLogger $logger)
+    {
+        parent::__construct($logger);
+        $this->catalog = $catalog;
+    }
     public function __invoke(Request $request)
     {
-        $products = Product::all();
-        $categories = Category::all();
-        $tags = Tag::all();
-        $brands = Brand::all();
-        $groups = Group::all();
-        $colors = Color::all();
+        $filter = new CatalogFilter($request->query());
 
-        $maxPrice = Product::orderBy('price', 'DESC')->first();
-        $minPrice = Product::orderBy('price', 'ASC')->first();
+        $products = $this->catalog->getFilteredAndSortedProducts($request, $filter);
 
-//        $groups = new ProductGroupColorController($product);
+        $categories = $this->catalog->getCategories();
+        $brands = $this->catalog->getBrands();
+        $colors = $this->catalog->getColors();
+        $tags = $this->catalog->getTags();
+        $priceRange = $this->catalog->getPriceRange();
 
-        return view('shop.catalog.index', compact('products', 'categories', 'tags', 'brands', 'groups', 'maxPrice', 'minPrice', 'colors'));
+        return view('shop.catalog.index', compact('products', 'categories', 'brands', 'colors', 'tags', 'priceRange'));
     }
 }

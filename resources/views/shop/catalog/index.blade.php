@@ -2,7 +2,7 @@
 @section('content')
     <main class="overflow-hidden ">
         <!--Start Breadcrumb Style2-->
-        <section class="breadcrumb-area" style="background-image: url({{ asset('shop/images/inner-pages/breadcum-bg.png') }});">
+        <section class="breadcrumb-area" style="background-image: url({{ asset('storage/images/shoes/catalog_main.jpeg') }});">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -29,7 +29,7 @@
                         <div class="product-categories-one__inner">
                             <ul>
                                 @foreach($categories as $category)
-                                <li> <a href="#0" class="img-box">
+                                <li> <a href="{{ route('shop.catalog.index', ['category_id' => $category->id]) }}" class="img-box">
                                         <div class="inner">
                                             <img src="{{ asset('storage') . '/' . $category->preview_image }}" alt="" />
                                         </div>
@@ -55,49 +55,117 @@
                                     class="flaticon-cross"> </i> </button>
                             <div class="sidebar-holder">
                                 <form action="#0" class="footer-default__subscrib-form m-0 p-0 wow fadeInUp animated">
-                                    <div class="footer-input-box p-0 "> <input type="email" placeholder="Элекронная почта"
+                                    <div class="footer-input-box p-0 "> <input type="email" placeholder="Поиск товаров"
                                                                                name="email"> <button type="submit" class="subscribe_btn"> <i
                                                 class="flaticon-magnifying-glass"></i> </button> </div>
                                 </form>
-                                <div class="single-sidebar-box mt-30 wow fadeInUp animated">
-                                    <h4>Выберите категорию</h4>
-                                    <div class="checkbox-item">
-                                        <form>
+                                <form method="GET" action="{{ route('shop.catalog.index') }}">
+                                    {{-- Скрытое поле с категорией --}}
+                                    @if(request()->has('category_id'))
+                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                                    @endif
+
+                                    {{-- Категории --}}
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <h4>Выберите категорию</h4>
+                                        <div class="checkbox-item">
                                             @foreach($categories as $category)
-                                            <div class="form-group"> <input type="checkbox" id="{{ $category->id }}"> <label
-                                                    for="{{ $category->id }}">{{ $category->title }}</label>
-                                            </div>
+                                                <div class="form-group">
+                                                    <input name="categories[]"
+                                                           type="checkbox"
+                                                           value="{{ $category->id }}"
+                                                           {{ in_array($category->id, request()->input('categories', [])) ? 'checked' : '' }}
+                                                           id="category_{{ $category->id }}">
+                                                    <label for="category_{{ $category->id }}">{{ $category->title }}</label>
+                                                </div>
                                             @endforeach
-                                        </form>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="single-sidebar-box mt-30 wow fadeInUp animated">
-                                    <h4>Цвет </h4>
-                                    <ul class="color-option">
-                                        @foreach($colors as $color)
-                                        <li>
-                                            <a href="#0" class="color-option-single" style="background: {{ '#' . $color->color }}; border: 1px solid #000"> <span> {{ $color->title }}</span> </a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div class="single-sidebar-box mt-30 wow fadeInUp animated">
-                                    <h4>Цена</h4>
-                                    <div class="slider-box">
-                                        <div id="price-range" class="slider"></div>
-                                        <div class="output-price"> <label for="priceRange">Цена:</label> <input
-                                                type="text" id="priceRange" readonly> </div> <button class="filterbtn"
-                                                                                                     type="submit"> Фильтр </button>
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <h4>Выберите бренд</h4>
+                                        <div class="checkbox-item">
+                                            @foreach($brands as $brand)
+                                                <div class="form-group">
+                                                    <input name="brands[]"
+                                                           type="checkbox"
+                                                           value="{{ $brand->id }}"
+                                                           {{ in_array($brand->id, request()->input('brands', [])) ? 'checked' : '' }}
+                                                           id="brand_{{ $brand->id }}">
+                                                    <label for="brand_{{ $brand->id }}">{{ $brand->title }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="single-sidebar-box mt-30 wow fadeInUp animated pb-0 border-bottom-0">
-                                    <h4>Теги </h4>
-                                    <ul class="popular-tag">
-                                        @foreach($tags as $tag)
-                                        <li><a href="#0">{{ $tag->title }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+
+                                    {{-- Цвета --}}
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <h4>Цвет</h4>
+                                        <div class="checkbox-item">
+                                            @foreach($colors as $color)
+                                                <div class="form-group">
+                                                    <input name="colors[]"
+                                                           type="checkbox"
+                                                           value="{{ $color->id }}"
+                                                           {{ in_array($color->id, request()->input('colors', [])) ? 'checked' : '' }}
+                                                           id="color_{{ $color->id }}">
+                                                    <label for="color_{{ $color->id }}">{{ $color->title }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    {{-- Цена --}}
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <h4>Цена</h4>
+                                        <div class="slider-box">
+                                            <div class="output-price">
+                                                <label for="min_price">Минимальная цена:</label>
+                                                <input type="text"
+                                                       id="min_price"
+                                                       name="price[from]"
+                                                       value="{{ request('price.from') }}"
+                                                       placeholder="0">
+                                            </div>
+                                            <div class="output-price">
+                                                <label for="max_price">Максимальная цена:</label>
+                                                <input type="text"
+                                                       id="max_price"
+                                                       name="price[to]"
+                                                       value="{{ request('price.to') }}"
+                                                       placeholder="{{ (integer) $priceRange['max']->price }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Теги --}}
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <h4>Теги</h4>
+                                        <div class="checkbox-item">
+                                            @foreach($tags as $tag)
+                                                <div class="form-group">
+                                                    <input name="tags[]"
+                                                           type="checkbox"
+                                                           value="{{ $tag->id }}"
+                                                           {{ in_array($tag->id, request()->input('filters.tags', [])) ? 'checked' : '' }}
+                                                           id="tag_{{ $tag->id }}">
+                                                    <label for="tag_{{ $tag->id }}">{{ $tag->title }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    {{-- Кнопка фильтра --}}
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <button class="btn btn-secondary mt-2" type="submit">Применить фильтр</button>
+                                    </div>
+                                    <div class="single-sidebar-box mt-30 wow fadeInUp animated">
+                                        <a href="{{ route('shop.catalog.index') }}" class="btn btn-secondary mt-2">Сбросить фильтр</a>
+                                    </div>
+                                    {{-- Сохраняем текущую сортировку --}}
+                                    @if(request('sort'))
+                                        <input type="hidden" name="sort" value="{{ request('sort') }}">
+                                    @endif
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -111,16 +179,21 @@
                                     </div>
                                     <div
                                         class="right-box justify-content-md-between justify-content-center wow fadeInUp animated">
-                                        <div class="short-by">
-                                            <div class="select-box"> <select class="wide">
-                                                    <option data-display="Новое">Featured </option>
-                                                    <option value="1">Лучшее </option>
-                                                    <option value="2">По наименованию, А-Я</option>
-                                                    <option value="3">По наименованию, Я-А</option>
-                                                    <option value="3">Цена, по возрастанию</option>
-                                                    <option value="3">Цена, по убыванию</option>
-                                                </select> </div>
-                                        </div>
+                                        <form method="GET" action="{{ route('shop.catalog.index') }}" class="d-flex align-items-center">
+                                            <div class="short-by me-3">
+                                                <div class="select-box">
+                                                    <select name="sort" class="wide" onchange="this.form.submit()">
+                                                        <option value="" disabled {{ request('sort') ? '' : 'selected' }}>Сортировка</option>
+                                                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Новое</option>
+                                                        <option value="best" {{ request('sort') === 'best' ? 'selected' : '' }}>Лучшее</option>
+                                                        <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>По наименованию, А-Я</option>
+                                                        <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>По наименованию, Я-А</option>
+                                                        <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Цена, по возрастанию</option>
+                                                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Цена, по убыванию</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
                                         <div
                                             class="product-view-style d-flex justify-content-md-between justify-content-center">
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -258,15 +331,6 @@
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="payment-method"> <a href="#0"> <img
-                                                                                    src="{{ asset('shop/images/payment_method/method_1.png') }}"
-                                                                                    alt=""> </a> <a href="#0"> <img
-                                                                                    src="{{ asset('shop/images/payment_method/method_2.png') }}"
-                                                                                    alt=""> </a> <a href="#0"> <img
-                                                                                    src="{{ asset('shop/images/payment_method/method_3.png') }}"
-                                                                                    alt=""> </a> <a href="#0"> <img
-                                                                                    src="{{ asset('shop/images/payment_method/method_4.png') }}"
-                                                                                    alt=""> </a> </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -204,7 +204,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.color.index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tags"></i>
+                            <i class="nav-icon fas fa-palette"></i>
                             <p>
                                 Цвета
                             </p>

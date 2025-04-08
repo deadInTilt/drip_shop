@@ -133,7 +133,7 @@
                             <div class="search-box-holder">
                                 <form action="#0">
                                     <div class="form-group search-box menu">
-                                        <input type="text" class="form-control"  placeholder="Поиск товаров">
+                                        <input type="text" class="form-control"  placeholder="Поиск">
                                         <span class="search-icon"> <i class="flaticon-magnifying-glass"></i> </span>
                                     </div>
                                 </form>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="col-4 text-center">
                         <div class="middle"> <a href="{{ route('shop.home.index') }}" class="logo"> <img
-                                    src="{{ asset('shop/images/logo/logo.png') }}" alt=""> </a> </div>
+                                    src="{{ asset('storage/images/drip_logo_header.png') }}" alt=""> </a> </div>
                     </div>
                     <div class="col-4 text-end">
                         <div class="right d-flex align-items-center justify-content-end">
@@ -545,22 +545,10 @@
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-30 wow fadeInUp animated">
                     <div class="footer-default__single-box">
                         <div class="company-info">
-                            <div class="footer-logo"> <a href="index.html"> <img src="{{ asset('shop/images/logo/logo-2.png') }}"
+                            <div class="footer-logo"> <a href="index.html"> <img src="{{ asset('storage/images/drip_logo_footer.png') }}"
                                                                                  alt=""> </a> </div>
                             <div class="text1">
                                 <p>Интернет-магазин</p>
-                            </div>
-                            <div class="newsletter-bottom d-flex align-items-center">
-                                <ul class="footer__medio-boxx  medio-boxx  two d-flex align-items-center">
-                                    <li><a href="https://www.facebook.com/" target="_blank" class="active"><i
-                                                class="flaticon-facebook-app-symbol"></i></a></li>
-                                    <li><a href="https://www.youtube.com/" target="_blank"><i
-                                                class="flaticon-youtube"></i></a></li>
-                                    <li><a href="https://twitter.com/" target="_blank"><i
-                                                class="flaticon-twitter"></i></a></li>
-                                    <li><a href="https://www.instagram.com/" target="_blank"><i
-                                                class="flaticon-instagram"></i></a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -612,12 +600,6 @@
                 <div class="copyright wow fadeInUp animated">
                     <p>© 2025 <a href="{{ route('shop.home.index') }}">Drip Shop.</a></p>
                 </div>
-                <div class="footer-payment wow fadeInUp animated"> <a href="#0"> <img
-                            src="{{ asset('shop/images/payment_method/payment_1.png') }}" alt="payment"> </a> <a href="#0"> <img
-                            src="{{ asset('shop/images/payment_method/payment_2.png') }}" alt="payment"> </a> <a href="#0"> <img
-                            src="{{ asset('shop/images/payment_method/payment_3.png') }}" alt="payment"> </a> <a href="#0"> <img
-                            src="{{ asset('shop/images/payment_method/payment_4.png') }}" alt="payment"> </a> </div>
-                <div class="footer-bottom-menu wow fadeInUp animated">
                     <ul class="d-flex align-items-center">
                         <li> Все права защищены.</a> </li>
                     </ul>
