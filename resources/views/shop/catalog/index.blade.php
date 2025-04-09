@@ -51,15 +51,68 @@
             <div class="container">
                 <div class="row gx-4">
                     <div class="col-xl-3 col-lg-4">
-                        <div class="shop-grid-sidebar"> <button class="remove-sidebar d-lg-none d-block"> <i
-                                    class="flaticon-cross"> </i> </button>
+                        <div class="shop-grid-sidebar">
+                            <button class="remove-sidebar d-lg-none d-block">
+                                <i class="flaticon-cross"> </i>
+                            </button>
                             <div class="sidebar-holder">
-                                <form action="#0" class="footer-default__subscrib-form m-0 p-0 wow fadeInUp animated">
-                                    <div class="footer-input-box p-0 "> <input type="email" placeholder="Поиск товаров"
-                                                                               name="email"> <button type="submit" class="subscribe_btn"> <i
-                                                class="flaticon-magnifying-glass"></i> </button> </div>
+                                <form method="GET" action="{{ route('shop.catalog.index') }}" class="footer-default__subscrib-form m-0 p-0 wow fadeInUp animated">
+
+                                    {{-- Скрытое поле с поиском --}}
+                                    @if(request()->has('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+
+                                    {{-- Скрытое поле с категорией --}}
+                                    @if(request()->has('category_id'))
+                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                                    @endif
+
+                                    {{-- Скрытое поле с брендом --}}
+                                    @if(request()->has('brands'))
+                                        <input type="hidden" name="brands[]" value="{{ request('brands[]') }}">
+                                    @endif
+
+                                    {{-- Скрытое поле с цветом --}}
+                                    @if(request()->has('colors'))
+                                        <input type="hidden" name="colors[]" value="{{ request('colors[]') }}">
+                                    @endif
+
+                                    {{-- Скрытое поле с ценой --}}
+                                    @if(request()->has('price.from'))
+                                        <input type="hidden" name="price[from]" value="{{ request('price.from') }}">
+                                    @endif
+
+                                    {{-- Скрытое поле с ценой --}}
+                                    @if(request()->has('price.to'))
+                                        <input type="hidden" name="price[to]" value="{{ request('price.to') }}">
+                                    @endif
+
+                                    {{-- Скрытое поле с тегом --}}
+                                    @if(request()->has('tags'))
+                                        <input type="hidden" name="tags[]" value="{{ request('tags[]') }}">
+                                    @endif
+
+
+
+                                    <div class="footer-input-box p-0 ">
+                                        <input type="search"
+                                               placeholder="Поиск товаров"
+                                               value="{{ request('search') }}"
+                                               name="search">
+                                        <button type="submit" class="subscribe_btn">
+                                            <i class="flaticon-magnifying-glass"></i>
+                                        </button>
+                                    </div>
                                 </form>
+
                                 <form method="GET" action="{{ route('shop.catalog.index') }}">
+
+                                    {{-- Скрытое поле с поиском --}}
+                                     @if(request()->has('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+
                                     {{-- Скрытое поле с категорией --}}
                                     @if(request()->has('category_id'))
                                         <input type="hidden" name="category_id" value="{{ request('category_id') }}">

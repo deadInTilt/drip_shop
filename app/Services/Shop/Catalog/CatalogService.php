@@ -57,6 +57,13 @@ class CatalogService
     {
         $query = Product::filter($filter);
 
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
         if ($request->has('category_id')) {
             $query->where('category_id', $request->input('category_id'));
         }
