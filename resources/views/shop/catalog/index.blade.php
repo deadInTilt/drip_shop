@@ -527,18 +527,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 d-flex justify-content-center wow fadeInUp animated">
-                                <ul class="pagination text-center">
-                                    <li class="next"><a href="#0"><i class="flaticon-left-arrows"
-                                                                     aria-hidden="true"></i> </a></li>
-                                    <li><a href="#0">1</a></li>
-                                    <li><a href="#0" class="active">2</a></li>
-                                    <li><a href="#0">3</a></li>
-                                    <li><a href="#0">...</a></li>
-                                    <li><a href="#0">10</a></li>
-                                    <li class="next"><a href="#0"><i class="flaticon-next-1"
-                                                                     aria-hidden="true"></i> </a></li>
-                                </ul>
+                            <div class="col-12 d-grid justify-content-center wow fadeInUp animated">
+                                <div>
+                                    {{ $products->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                         </div>
                     </div>
