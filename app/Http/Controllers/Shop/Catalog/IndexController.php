@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shop\Catalog;
 
 use App\Http\Filters\CatalogFilter;
+use App\Models\CartItem;
 use App\Services\Logger\FileLogger;
 use App\Services\Shop\Catalog\CatalogService;
 use Illuminate\Http\Request;
@@ -27,6 +28,9 @@ class IndexController extends AbstractCatalogController
         $tags = $this->catalog->getTags();
         $priceRange = $this->catalog->getPriceRange();
 
-        return view('shop.catalog.index', compact('products', 'categories', 'brands', 'colors', 'tags', 'priceRange'));
+        $cartItems = CartItem::where('user_id', $request->user()->id)->get();
+
+
+        return view('shop.catalog.index', compact('products', 'categories', 'brands', 'colors', 'tags', 'priceRange', 'cartItems'));
     }
 }

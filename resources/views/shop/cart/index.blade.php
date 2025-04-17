@@ -22,7 +22,8 @@
         </section>
         <!--End Breadcrumb Style2-->
         <!--Start cart area-->
-        <section class="cart-area pt-120 pb-120">
+        @if($cartItems->count())
+            <section class="cart-area pt-120 pb-120">
             <div class="container">
                 <div class="row wow fadeInUp animated">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -38,68 +39,38 @@
                                         <th class="hide-me"></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="thumb-box"> <a href="shop-details-1.html" class="thumb">
-                                                    <img src="{{ asset('shop/images/shop/cart-product-thumb-1.jpg') }}" alt="">
-                                                </a> <a href="shop-details-1.html" class="title">
-                                                    <h5> Leather Bag </h5>
-                                                </a> </div>
-                                        </td>
-                                        <td>$250.00</td>
-                                        <td class="qty">
-                                            <div class="qtySelector text-center"> <span class="decreaseQty"><i
-                                                        class="flaticon-minus"></i> </span> <input type="number"
-                                                                                                   class="qtyValue" value="1" /> <span class="increaseQty"> <i
-                                                        class="flaticon-plus"></i> </span> </div>
-                                        </td>
-                                        <td class="sub-total">$500.00</td>
-                                        <td>
-                                            <div class="remove"> <i class="flaticon-cross"></i> </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="thumb-box"> <a href="shop-details-1.html" class="thumb">
-                                                    <img src="{{ asset('shop/images/shop/cart-product-thumb-2.jpg') }}" alt="">
-                                                </a> <a href="shop-details-1.html" class="title">
-                                                    <h5> Blue Headphone </h5>
-                                                </a> </div>
-                                        </td>
-                                        <td>$250.00</td>
-                                        <td class="qty">
-                                            <div class="qtySelector text-center"> <span class="decreaseQty"><i
-                                                        class="flaticon-minus"></i> </span> <input type="number"
-                                                                                                   class="qtyValue" value="1" /> <span class="increaseQty"> <i
-                                                        class="flaticon-plus"></i> </span> </div>
-                                        </td>
-                                        <td class="sub-total">$500.00</td>
-                                        <td>
-                                            <div class="remove"> <i class="flaticon-cross"></i> </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="thumb-box"> <a href="shop-details-1.html" class="thumb">
-                                                    <img src="{{ asset('shop/images/shop/cart-product-thumb-3.jpg') }}" alt="">
-                                                </a> <a href="shop-details-1.html" class="title">
-                                                    <h5> Comport Chair </h5>
-                                                </a> </div>
-                                        </td>
-                                        <td>$250.00</td>
-                                        <td class="qty">
-                                            <div class="qtySelector text-center"> <span class="decreaseQty"><i
-                                                        class="flaticon-minus"></i> </span> <input type="number"
-                                                                                                   class="qtyValue" value="1" /> <span class="increaseQty"> <i
-                                                        class="flaticon-plus"></i> </span> </div>
-                                        </td>
-                                        <td class="sub-total">$500.00</td>
-                                        <td>
-                                            <div class="remove"> <i class="flaticon-cross"></i> </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    @foreach($cartItems as $item)
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="thumb-box">
+                                                        <a href="{{ route('shop.product.index', $item->id) }}" class="thumb">
+                                                            <img src="{{ asset('storage') . '/' . $item->product->preview_image }}" alt="">
+                                                        </a>
+                                                        <a href="{{ route('shop.product.index', $item->product->id) }}" class="title">
+                                                            <h5> {{ $item->product->title }}</h5>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>{{ $item->product->price }}</td>
+                                                <td class="qty">
+                                                    <div class="qtySelector text-center">
+                                                        <span class="decreaseQty">
+                                                            <i class="flaticon-minus"></i>
+                                                        </span>
+                                                        <input type="number" class="qtyValue" value="{{ $item->quantity }}" />
+                                                        <span class="increaseQty">
+                                                            <i class="flaticon-plus"></i>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td class="sub-total">{{ ($item->product->price) * ($item->quantity) }}</td>
+                                                <td>
+                                                    <div class="remove"> <i class="flaticon-cross"></i> </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    @endforeach
                                 </table>
                             </div>
                         </div>
@@ -115,7 +86,7 @@
                                                                                 type="submit">Применить купон</button> </div>
                             </div>
                             <div class="cart-button-box-right wow fadeInUp animated"> <button class="btn--primary mt-30"
-                                                                                              type="submit">Вернуться к покупкам</button> <button class="btn--primary mt-30"
+                                                                                              type="submit"><a href="{{ route('shop.catalog.index') }}">Вернуться к покупкам</a></button> <button class="btn--primary mt-30"
                                                                                                                                                type="submit">Обновить корзину</button> </div>
                         </div>
                     </div>
@@ -130,72 +101,23 @@
                     </div>
                 </div>
                 <div class="row mt--30">
-                    <div class="col-xl-6 col-lg-7 wow fadeInUp animated">
-                        <div class="cart-total-box mt-30">
-                            <div class="table-outer">
-                                <table class="cart-table2">
-                                    <thead class="cart-header clearfix">
-                                    <tr>
-                                        <th colspan="1" class="shipping-title">Доставка</th>
-                                        <th class="price">$2500.00</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="shipping"> Доставка </td>
-                                        <td class="selact-box1">
-                                            <ul class="shop-select-option-box-1">
-                                                <li> <input type="checkbox" name="free_shipping" id="option_1"
-                                                            checked=""> <label for="option_1"><span></span>Бесплатная
-                                                        Доставка</label> </li>
-                                                <li> <input type="checkbox" name="flat_rate" id="option_2"> <label
-                                                        for="option_2"><span></span>Фиксированная ставка</label> </li>
-                                                <li> <input type="checkbox" name="local_pickup" id="option_3">
-                                                    <label for="option_3"><span></span>Самовывоз</label> </li>
-                                            </ul>
-                                            <div class="inner-text">
-                                                <p>Варианты доставки будут обновлены по ходу оформления заказа.</p>
-                                            </div>
-                                            <h4>Расчет доставки</h4>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="total">Итого</h4>
-                                        </td>
-                                        <td class="subtotal">$2500.00</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-xl-6 col-lg-5 wow fadeInUp animated">
                         <div class="cart-check-out mt-30">
                             <h3>Подтверждение</h3>
                             <ul class="cart-check-out-list">
                                 <li>
                                     <div class="left">
-                                        <p>Итого</p>
-                                    </div>
-                                    <div class="right">
-                                        <p>$2500.00</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="left">
-                                        <p>Доставка</p>
-                                    </div>
-                                    <div class="right">
-                                        <p><span>Фиксированная ставка:</span> $50.00</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="left">
                                         <p>Итого:</p>
                                     </div>
                                     <div class="right">
-                                        <p>$2550.00</p>
+                                        <p>{{ $totalPrice }}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="cart-button-box-right wow fadeInUp animated">
+                                        <button class="btn--primary mt-30" type="submit">
+                                            <a href="{{ route('shop.order.index') }}">Оформить заказ</a>
+                                        </button>
                                     </div>
                                 </li>
                             </ul>
@@ -204,6 +126,41 @@
                 </div>
             </div>
         </section>
-        <!--End cart area-->
+        @else
+            {{-- ❗ Заглушка — корзина пуста --}}
+            <section class="cart-area pt-120 pb-120">
+                <div class="container">
+                    <div class="row wow fadeInUp animated">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="cart-table-box">
+                                <div class="table-outer">
+                                    <table class="cart-table">
+                                        <thead class="cart-header">
+                                        <tr>
+                                            <th class="">Наименование товара</th>
+                                            <th class="price">Цена</th>
+                                            <th>Количество</th>
+                                            <th>Сумма</th>
+                                            <th class="hide-me"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <div class="text-center py-12">
+                                            <img src="{{ asset('images/empty-cart.png') }}" class="mx-auto w-48 mb-6" alt="Пусто">
+                                            <h2 class="text-xl font-semibold">Ваша корзина пуста</h2>
+                                            <p class="text-gray-600">Добавьте товары, чтобы увидеть их здесь</p>
+                                            <a href="{{ route('shop.catalog.index') }}" class="text-blue-500 mt-4 inline-block">
+                                                Перейти в каталог
+                                            </a>
+                                        </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
     </main>
+    @endif
 @endsection

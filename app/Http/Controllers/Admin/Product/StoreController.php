@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
-use App\Helpers\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\StoreRequest;
 use App\Models\Product;
+use App\Services\Logger\FileLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
+    public function __construct(FileLogger $logger)
+    {
+        $this->logger = $logger;
+    }
+
     public function __invoke(StoreRequest $request)
     {
         $data = $request->validated();
@@ -36,7 +41,7 @@ class StoreController extends Controller
         }
         catch (\Exception $exception){
             DB::rollBack();
-            LogHelper::logError('Ошибка при создании товара: ' . $exception->getMessage(), [
+            $this->logger->error('Ошибка при создании товара: ' . $exception->getMessage(), [
                 'exception' => $exception,
             ]);
             abort(500);

@@ -40,7 +40,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
     });
 
     Route::group(['namespace' => 'Cart', 'prefix' => 'cart', 'middleware' => ['auth']], function () {
-        Route::get('/', 'IndexController')->name('shop.cart.index');
+        Route::get('/', [App\Http\Controllers\Shop\Cart\IndexController::class, 'index'])->name('shop.cart.index');
+    });
+
+    Route::group(['namespace' => 'Product', 'prefix' => 'product', 'middleware' => ['auth']], function () {
+        Route::get('/{product}', 'IndexController')->name('shop.product.index');
+    });
+
+    Route::group(['namespace' => 'Order', 'prefix' => 'order', 'middleware' => ['auth']], function () {
+        Route::get('/', 'IndexController')->name('shop.order.index');
+        Route::post('/', 'StoreController')->name('shop.order.store');
     });
 
 });

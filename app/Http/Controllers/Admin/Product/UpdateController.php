@@ -6,11 +6,16 @@ use App\Helpers\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\UpdateRequest;
 use App\Models\Product;
+use App\Services\Logger\FileLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class UpdateController extends Controller
 {
+    public function __construct(FileLogger $logger)
+    {
+        $this->logger = $logger;
+    }
     public function __invoke(UpdateRequest $request, Product $product)
     {
         $data = $request->validated();
@@ -30,12 +35,12 @@ class UpdateController extends Controller
                 }
             DB::commit();
 
-            LogHelper::logInfo('Товар {product_id} обновлен пользователем {user_id}', ['product_id' => $product->id, 'user_id' => $request->user()->email]);
+            $this->logger->info('Товар {product_id} обновлен пользователем {user_id}', ['product_id' => $product->id, 'user_id' => $request->user()->email]);
 
             return view('admin.product.show', compact('product'));
         } catch (\Exception $exception) {
             DB::rollBack();
-            LogHelper::logError('Ошибка при обновлении товара: ' . $exception->getMessage(), [
+            $this->logger->error('Ошибка при обновлении товара: ' . $exception->getMessage(), [
                 'exception' => $exception,
             ]);
             abort(500, $exception->getMessage());

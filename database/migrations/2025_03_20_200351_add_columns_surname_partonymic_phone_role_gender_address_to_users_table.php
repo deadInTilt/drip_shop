@@ -17,7 +17,6 @@ return new class extends Migration
             $table->smallInteger('age')->nullable()->after('patronymic')->nullable();
             $table->unsignedSmallInteger('gender')->after('age')->nullable();
             $table->string('phone')->nullable()->after('gender');
-            $table->string('address')->nullable()->after('phone');
         });
     }
 

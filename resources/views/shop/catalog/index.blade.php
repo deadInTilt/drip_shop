@@ -185,7 +185,7 @@
                                                        id="max_price"
                                                        name="price[to]"
                                                        value="{{ request('price.to') }}"
-                                                       placeholder="{{ (integer) $priceRange['max']->price }}">
+                                                       placeholder="{{ ($priceRange['max'] ? $priceRange['max']->price : 'не указано') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -292,7 +292,7 @@
                                             <div class="col-xl-4 col-lg-6 col-6 ">
                                                 <div class="products-three-single  wow w-100 ">
                                                     <div class="products-three-single-img">
-                                                        <a href="shop-details-3.html" class="d-block"> <img
+                                                        <a href="{{ route('shop.product.index', $product->id) }}" class="d-block"> <img
                                                                 src="{{ asset('storage/' . $product->preview_image) }}"
                                                                 class="first-img" alt="" />
                                                             <img src="{{ asset('storage/' . $product->preview_image) }}"
@@ -356,8 +356,13 @@
                                                                             <span>(123)</span> </div>
                                                                         <p class="text"> {{ $product->description }} </p>
                                                                         <div class="price">
-                                                                            <h2> {{ $product->price }} РУБ <del> 20000 РУБ </del></h2>
-                                                                            <h6> В наличии</h6>
+                                                                            <h2> {{ $product->price }} </h2>
+                                                                            <h6>РУБ</h6>
+                                                                            @if($product->quantity)
+                                                                                <div class="product-quantity-check"> <i class="flaticon-select"></i>
+                                                                                    <p>В наличии</p>
+                                                                                </div>
+                                                                            @endif
                                                                         </div>
                                                                         <div class="color-varient"> <a href="#0"
                                                                                                        class="color-name pink">
@@ -391,7 +396,7 @@
                                                     </div>
                                                     <!--End Quick View-->
                                                     <div class="products-three-single-content text-center"> <span> {{ $product->category->title }}</span>
-                                                        <h5><a href="shop-details-3.html">{{$product->title}}</a></h5>
+                                                        <h5><a href="{{ route('shop.product.index', $product->id) }}">{{$product->title}}</a></h5>
                                                         <p>{{ $product->price }} РУБ </p>
                                                     </div>
                                                 </div>
@@ -407,7 +412,7 @@
                                             <div class="col-12">
                                                 <div class="product-grid-two list mt-30 ">
                                                     <div class="product-grid-two__img">
-                                                        <a href="shop-details-2.html" class="d-block"> <img
+                                                        <a href="{{ route('shop.product.index', $product->id) }}" class="d-block"> <img
                                                                 src="{{ asset('storage/') . '/' . $product->preview_image }}"
                                                                 class="first-img" alt="" /> <img
                                                                 src="{{ asset('storage/') . '/' . $product->preview_image }}"
@@ -500,7 +505,7 @@
                                                     </div>
                                                     <div class="product-grid-two-content text-center">
                                                         <span> {{ $product->category->title }}</span>
-                                                        <h5><a href="shop-details-2.html">{{ $product->title }}</a></h5>
+                                                        <h5><a href="{{ route('shop.product.index', $product->id) }}">{{ $product->title }}</a></h5>
                                                         <p><del>20000 РУБ</del>
                                                             {{ $product->price }} РУБ</p>
                                                         <p class="text"> {{ $product->description }} </p>

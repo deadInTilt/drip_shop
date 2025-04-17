@@ -42,88 +42,6 @@
 <header class="header-default">
     <!-- Start Desktop Menu -->
     <div class="menubox">
-        <div class="mobile-menu d-lg-none d-block">
-            <div class="menu-closer"></div>
-            <div class="mobile-menu__sidebar-menu">
-                <div class="menu-closer two"> <span> Close Menu</span> <span class="cross"><i
-                            class="flaticon-cross"></i></span> </div>
-                <div class="search-box-holder">
-                    <form action="#0">
-                        <div class="form-group search-box menu"> <input type="text" class="form-control"
-                                                                        placeholder="Search for products"> <span class="search-icon"> <i
-                                    class="flaticon-magnifying-glass"></i> </span> </div>
-                    </form>
-                </div>
-                <ul class="page-dropdown-menu">
-                    <li class="dropdown-list"> <a href="#0"> <span>Home </span> <span class="menuarrow"> <i
-                                    class="flaticon-next-1"></i> </span> </a>
-                        <ul class="dropdown">
-                            <li> <a href="index.html">Home Page 01</a> </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-list"> <a href="#0"> <span>Shop </span> <span class="menuarrow"> <i
-                                    class="flaticon-next-1"></i> </span> </a>
-                        <ul class="dropdown">
-                            <li class="subhed position-relative"> <a href="#0"> <span>Shop Details Style </span>
-                                    <span class="menuarrowtwo"> <i class="flaticon-next-1"></i> </span> </a>
-                                <ul class="subdropdown">
-                                    <li> <a href="shop-details-1.html">Shop Details 01</a> </li>
-                                </ul>
-                            </li>
-                            <li> <a href="shop-grid.html"> Shop Grid</a> </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-list"> <a href="#0"> <span>Features </span> <span class="menuarrow"> <i
-                                    class="flaticon-next-1"></i> </span> </a>
-                        <ul class="dropdown">
-                            <li class="subhed position-relative"> <a href="#0"> <span>Category</span> <span
-                                        class="menuarrowtwo"> <i class="flaticon-next-1"></i> </span> </a>
-                                <ul class="subdropdown">
-                                    <li> <a href="shop-grid.html">Latest Shoes</a> </li>
-                                    <li> <a href="shop-grid.html">New Shoes</a> </li>
-                                    <li> <a href="shop-grid.html">Casual Shoes</a> </li>
-                                    <li> <a href="shop-grid.html">Office Shoes</a> </li>
-                                </ul>
-                            </li>
-                            <li class="subhed position-relative"> <a href="#0"> <span>Offers</span> <span
-                                        class="menuarrowtwo"> <i class="flaticon-next-1"></i> </span> </a>
-                                <ul class="subdropdown">
-                                    <li> <a href="shop-grid.html">New Arrivals </a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Shirts</a> </li>
-                                    <li> <a href="shop-grid-right-sidebar.html">Polos</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Jeans</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Casual Dress</a> </li>
-                                </ul>
-                            </li>
-                            <li class="subhed position-relative"> <a href="#0"> <span>accessories</span> <span
-                                        class="menuarrowtwo"> <i class="flaticon-next-1"></i> </span> </a>
-                                <ul class="subdropdown">
-                                    <li> <a href="shop-grid-left-sidebar.html">Latest Items </a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Quick Deal</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Shoes Items</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Hot Deal</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">Fast Services </a> </li>
-                                </ul>
-                            </li>
-                            <li class="subhed position-relative"> <a href="#0"> <span>Discount</span> <span
-                                        class="menuarrowtwo"> <i class="flaticon-next-1"></i> </span> </a>
-                                <ul class="subdropdown">
-                                    <li> <a href="shop-grid-left-sidebar.html">10% Off</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">20% Off</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">30% Off</a> </li>
-                                    <li> <a href="shop-grid-left-sidebar.html">40% Off</a> </li>
-                                    <li> <a href="shop-list-left-sidebar.html">50% Off</a> </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact </a></li>
-                    <li><a href="login.html">Login </a></li>
-                    <li><a href="register.html">Register </a></li>
-                </ul>
-            </div>
-        </div>
-
         <!-- Head menu -->
         <div class="main-menu">
             <div class="container">
@@ -157,7 +75,7 @@
                                 <li class="d-lg-block d-none"><a href="wishlist.html" class="number"> <i
                                             class="flaticon-heart"></i> </a> </li>
                                 <li class="cartm"> <a href="#0" class="number cart-icon"> <i
-                                            class="flaticon-shopping-cart"></i><span class="count">(5)</span> </a>
+                                            class="flaticon-shopping-cart"></i><span class="count">({{ $cartItems->count() }})</span> </a>
                                 </li>
                                 <li class="menubar d-lg-block d-none"> <span></span> <span></span> <span></span>
                                 </li>
@@ -177,8 +95,8 @@
                         <ul class="page-dropdown-menu d-flex align-items-center justify-content-center">
                             <li class="dropdown-list"> <a href="{{ route('shop.home.index') }}"> <span>Главная</span> </a></li>
                             <li class="dropdown-list"> <a href="{{ route('shop.catalog.index') }}"> <span>Каталог</span> </a></li>
-                            <li class="dropdown-list"> <a href="#0"> <span>Блог</span></a></li>
-                            <li class="dropdown-list"> <a href="contact.html">Контакты</a> </li>
+                            <li class="dropdown-list"> <a href="#"> <span>Блог</span></a></li>
+                            <li class="dropdown-list"> <a href="#">Контакты</a> </li>
                         </ul>
                     </nav>
                 </div>
@@ -401,75 +319,36 @@
     <div class="side-cart d-flex flex-column justify-content-between">
         <div class="top">
             <div class="content d-flex justify-content-between align-items-center">
-                <h6 class="text-uppercase">Ваша корзина (03)</h6> <span class="cart-close text-uppercase">X</span>
+                <h6 class="text-uppercase">Ваша корзина ({{ $cartItems->count() }})</h6> <span class="cart-close text-uppercase">X</span>
             </div>
             <div class="cart_items">
                 <div class="items d-flex justify-content-between align-items-center">
-                    <div class="left d-flex align-items-center"> <a href="shop-details-1.html"
-                                                                    class="thumb d-flex justify-content-between align-items-center"> <img
-                                src="{{ asset('shop/images/shop/products-img1.jpg') }}" alt=""> </a>
-                        <div class="text"> <a href="shop-details-1.html">
-                                <h6>Diamond Bracelet</h6>
+                    @foreach($cartItems as $item)
+                        <div class="left d-flex align-items-center">
+                            <a href="{{ route('shop.product.index', $item->product->id) }}" class="thumb d-flex justify-content-between align-items-center">
+                                <img src="{{ asset('storage') . '/' . $item->product->preview_image }}" alt="">
                             </a>
-                            <p>2 X <span>$350.00</span> </p>
+                            <div class="text"> <a href="shop-details-1.html">
+                                    <h6>{{ $item->product->title }}</h6>
+                                </a>
+                                <p>{{ $item->quantity }} X <span>{{ $item->product->price }}</span> </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="right">
-                        <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                    </div>
-                </div>
-                <div class="items d-flex justify-content-between align-items-center">
-                    <div class="left d-flex align-items-center"> <a href="shop-details-1.html"
-                                                                    class="thumb d-flex justify-content-between align-items-center"> <img
-                                src="{{ asset('shop/images/shop/products-img2.jpg') }}" alt=""> </a>
-                        <div class="text"> <a href="shop-details-1.html">
-                                <h6>Blacked Neckles </h6>
-                            </a>
-                            <p>1 X <span>$150.00</span> </p>
+                        <div class="right">
+                            <div class="item-remove"> <i class="flaticon-cross"></i> </div>
                         </div>
-                    </div>
-                    <div class="right">
-                        <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                    </div>
-                </div>
-                <div class="items d-flex justify-content-between align-items-center">
-                    <div class="left d-flex align-items-center"> <a href="shop-details-1.html"
-                                                                    class="thumb d-flex justify-content-between align-items-center"> <img
-                                src="{{ asset('shop/images/shop/products-img3.jpg') }}" alt=""> </a>
-                        <div class="text"> <a href="shop-details-1.html">
-                                <h6>Diamond Ring </h6>
-                            </a>
-                            <p>1 X <span>$200.00</span> </p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                    </div>
-                </div>
-                <div class="items d-flex justify-content-between align-items-center">
-                    <div class="left d-flex align-items-center"> <a href="shop-details-2.html"
-                                                                    class="thumb d-flex justify-content-between align-items-center"> <img
-                                src="{{ asset('shop/images/shop/products-img4.jpg') }}" alt=""> </a>
-                        <div class="text"> <a href="shop-details-1.html">
-                                <h6>Women Earring</h6>
-                            </a>
-                            <p>1 X <span>$150.00</span> </p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="bottom">
             <div class="total-ammount d-flex justify-content-between align-items-center">
                 <h6 class="text-uppercase">Итого:</h6>
-                <h6 class="ammount text-uppercase">$850.00</h6>
+                <h6 class="ammount text-uppercase">{{ ($item->product->price * $item->quantity) }}</h6>
             </div>
             <div class="button-box d-flex justify-content-between"> <a href="{{ route('shop.cart.index') }}" class="btn_black"> Просмотр
-                </a> <a href="{{ route('shop.cart.index') }}" class="button-2 btn_theme"> Оформить </a> </div>
+                </a> <a href="{{ route('shop.order.index') }}" class="button-2 btn_theme"> Оформить </a> </div>
         </div>
+        @endforeach
     </div>
     <!-- End sidebar cart -->
 
