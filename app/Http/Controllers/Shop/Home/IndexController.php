@@ -11,7 +11,10 @@ class IndexController extends Controller
     public function __invoke(Request $request)
     {
         $cartItems = CartItem::where('user_id', $request->user()->id)->get();
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
 
-        return view('shop.home.index', compact('cartItems'));
+        return view('shop.home.index', compact('cartItems', 'totalPrice'));
     }
 }

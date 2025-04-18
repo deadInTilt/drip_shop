@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Shop\Cart\CartController;
 use App\Http\Controllers\Shop\Catalog\IndexController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,23 +32,25 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
         return redirect()->route('shop.home.index');
     });
 
-    Route::group(['namespace' => 'Home', 'prefix' => 'home', 'middleware' => ['auth']], function () {
+    Route::group(['namespace' => 'Home', 'prefix' => 'home'], function () {
         Route::get('/', 'IndexController')->name('shop.home.index');
     });
 
-    Route::group(['namespace' => 'Catalog', 'prefix' => 'catalog', 'middleware' => ['auth']], function () {
+    Route::group(['namespace' => 'Catalog', 'prefix' => 'catalog'], function () {
         Route::get('/', 'IndexController')->name('shop.catalog.index');
     });
 
-    Route::group(['namespace' => 'Cart', 'prefix' => 'cart', 'middleware' => ['auth']], function () {
-        Route::get('/', [App\Http\Controllers\Shop\Cart\IndexController::class, 'index'])->name('shop.cart.index');
+    Route::group(['namespace' => 'Cart', 'prefix' => 'cart'], function () {
+        Route::get('/', [CartController::class, 'index'])->name('shop.cart.index');
+        Route::post('/add', [CartController::class, 'add'])->name('shop.cart.add');
+        Route::delete('/{item}', [CartController::class, 'remove'])->name('shop.cart.remove');
     });
 
-    Route::group(['namespace' => 'Product', 'prefix' => 'product', 'middleware' => ['auth']], function () {
+    Route::group(['namespace' => 'Product', 'prefix' => 'product'], function () {
         Route::get('/{product}', 'IndexController')->name('shop.product.index');
     });
 
-    Route::group(['namespace' => 'Order', 'prefix' => 'order', 'middleware' => ['auth']], function () {
+    Route::group(['namespace' => 'Order', 'prefix' => 'order'], function () {
         Route::get('/', 'IndexController')->name('shop.order.index');
         Route::post('/', 'StoreController')->name('shop.order.store');
     });

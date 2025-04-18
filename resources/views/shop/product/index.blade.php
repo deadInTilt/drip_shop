@@ -122,8 +122,11 @@
                                 <div class="shop-details-top-order-now"> <i class="flaticon-point"></i>
                                     <p>Закажи сейчас, осталось {{ $product->quantity }} </p>
                                 </div>
-                                <div class="shop-details-top-cart-box-btn"> <button class="btn--primary style2 "
-                                                                                    type="submit">Добавить в корзину</button> </div>
+                                <form action="{{ route('shop.cart.add') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button type="submit" class="btn--primary style2">Добавить в корзину</button>
+                                </form>
                                 <div class="shop-details-top-free-shipping"> <i class="flaticon-shipping"></i>
                                     <p>Потрать <span>10000.00 РУБ</span> и доставка бесплатно!</p>
                                 </div>

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Shop\Order;
 
-use App\Exceptions\Shop\EmptyCartException;
+use App\Exceptions\Shop\Order\EmptyCartException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\Order\OrderRequest;
-use App\Models\CartItem;
 use App\Services\Shop\Order\OrderService;
-use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {

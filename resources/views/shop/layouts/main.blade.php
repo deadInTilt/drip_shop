@@ -75,7 +75,7 @@
                                 <li class="d-lg-block d-none"><a href="wishlist.html" class="number"> <i
                                             class="flaticon-heart"></i> </a> </li>
                                 <li class="cartm"> <a href="#0" class="number cart-icon"> <i
-                                            class="flaticon-shopping-cart"></i><span class="count">({{ $cartItems->count() }})</span> </a>
+                                            class="flaticon-shopping-cart"></i><span class="count">({{ $cartItems->sum('quantity') }})</span> </a>
                                 </li>
                                 <li class="menubar d-lg-block d-none"> <span></span> <span></span> <span></span>
                                 </li>
@@ -319,11 +319,11 @@
     <div class="side-cart d-flex flex-column justify-content-between">
         <div class="top">
             <div class="content d-flex justify-content-between align-items-center">
-                <h6 class="text-uppercase">Ваша корзина ({{ $cartItems->count() }})</h6> <span class="cart-close text-uppercase">X</span>
+                <h6 class="text-uppercase">Ваша корзина ({{ $cartItems->sum('quantity') }})</h6> <span class="cart-close text-uppercase">X</span>
             </div>
             <div class="cart_items">
-                <div class="items d-flex justify-content-between align-items-center">
-                    @foreach($cartItems as $item)
+                @foreach($cartItems as $item)
+                    <div class="items d-flex justify-content-between align-items-center">
                         <div class="left d-flex align-items-center">
                             <a href="{{ route('shop.product.index', $item->product->id) }}" class="thumb d-flex justify-content-between align-items-center">
                                 <img src="{{ asset('storage') . '/' . $item->product->preview_image }}" alt="">
@@ -335,20 +335,26 @@
                             </div>
                         </div>
                         <div class="right">
-                            <div class="item-remove"> <i class="flaticon-cross"></i> </div>
+                            <form action="{{ route('shop.cart.remove', $item->product->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="item-remove" style="background: none; border: none;">
+                                    <i class="flaticon-cross"></i>
+                                </button>
+                            </form>
                         </div>
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="bottom">
             <div class="total-ammount d-flex justify-content-between align-items-center">
                 <h6 class="text-uppercase">Итого:</h6>
-                <h6 class="ammount text-uppercase">{{ ($item->product->price * $item->quantity) }}</h6>
+                <h6 class="ammount text-uppercase">{{ $totalPrice }}</h6>
             </div>
             <div class="button-box d-flex justify-content-between"> <a href="{{ route('shop.cart.index') }}" class="btn_black"> Просмотр
                 </a> <a href="{{ route('shop.order.index') }}" class="button-2 btn_theme"> Оформить </a> </div>
         </div>
-        @endforeach
     </div>
     <!-- End sidebar cart -->
 

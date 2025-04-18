@@ -66,7 +66,15 @@
                                                 </td>
                                                 <td class="sub-total">{{ ($item->product->price) * ($item->quantity) }}</td>
                                                 <td>
-                                                    <div class="remove"> <i class="flaticon-cross"></i> </div>
+                                                    <div class="remove">
+                                                        <form action="{{ route('shop.cart.remove', $item->product->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="item-remove" style="background: none; border: none;">
+                                                                <i class="flaticon-cross"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -85,9 +93,9 @@
                                 <div class="apply-coupon-button mt-30"> <button class="btn--primary style2"
                                                                                 type="submit">Применить купон</button> </div>
                             </div>
-                            <div class="cart-button-box-right wow fadeInUp animated"> <button class="btn--primary mt-30"
-                                                                                              type="submit"><a href="{{ route('shop.catalog.index') }}">Вернуться к покупкам</a></button> <button class="btn--primary mt-30"
-                                                                                                                                               type="submit">Обновить корзину</button> </div>
+                            <div class="cart-button-box-right wow fadeInUp animated">
+                                <button class="btn--primary mt-30" type="submit"><a href="{{ route('shop.catalog.index') }}">Вернуться к покупкам</a></button>
+                                <button class="btn--primary mt-30" type="submit">Обновить корзину</button> </div>
                         </div>
                     </div>
                 </div>

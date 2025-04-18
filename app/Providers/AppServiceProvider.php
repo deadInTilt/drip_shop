@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Logger\FileLogger;
+use App\Services\Logger\LoggerInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(LoggerInterface::class, FileLogger::class);
     }
 
     /**

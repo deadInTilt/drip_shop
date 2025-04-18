@@ -228,7 +228,6 @@
                                 <div
                                     class="shop-grid-page-top-info p-0 justify-content-md-between justify-content-center">
                                     <div class="left-box wow fadeInUp animated">
-                                        <p>Показано 10 из 50 результатов</p>
                                     </div>
                                     <div
                                         class="right-box justify-content-md-between justify-content-center wow fadeInUp animated">
@@ -298,8 +297,11 @@
                                                             <img src="{{ asset('storage/' . $product->preview_image) }}"
                                                                  alt="" class="hover-img" />
                                                         </a>
-                                                        <a href="cart.html" class="addcart btn--primary style2">
-                                                            Добавить в корзину </a>
+                                                        <form action="{{ route('shop.cart.add') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                            <button type="submit" class="addcart btn--primary style2">Добавить в корзину</button>
+                                                        </form>
                                                         <div class="products-grid__usefull-links">
                                                             <ul>
                                                                 <li><a href="#0"> <i class="flaticon-heart"> </i> <span>

@@ -7,7 +7,7 @@ use App\Http\Requests\Shop\Cart\CartRequest;
 use App\Services\Shop\Cart\CartService;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class CartController extends Controller
 {
     protected $service;
 
@@ -28,15 +28,15 @@ class IndexController extends Controller
 
     public function add(CartRequest $request)
     {
-        $data = $request->validated();
+        $this->service->add($request);
 
-        $this->service->add($data['product_id'], $data['quantity']);
+        return redirect()->back()->with('success', 'Товар добавлен в корзину');
     }
 
-    public function remove(CartRequest $request)
+    public function remove(int $id)
     {
-        $data = $request->validated();
+        $this->service->remove($id);
 
-        $this->service->remove($data['product_id'], $data['quantity']);
+        return redirect()->back()->with('success', 'Товар удален из корзины');
     }
 }

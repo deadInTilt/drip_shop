@@ -28,9 +28,15 @@ class IndexController extends AbstractCatalogController
         $tags = $this->catalog->getTags();
         $priceRange = $this->catalog->getPriceRange();
 
-        $cartItems = CartItem::where('user_id', $request->user()->id)->get();
+        $cartItems = CartItem::with('product')
+            ->where('user_id', $request->user()->id)->get();
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
 
 
-        return view('shop.catalog.index', compact('products', 'categories', 'brands', 'colors', 'tags', 'priceRange', 'cartItems'));
+
+
+        return view('shop.catalog.index', compact('products', 'categories', 'brands', 'colors', 'tags', 'priceRange', 'cartItems', 'totalPrice'));
     }
 }
