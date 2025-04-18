@@ -17,13 +17,18 @@ class OrderService
         $this->logger = $logger;
     }
 
-    public function create($data)
+    public function create($request)
     {
-        $user = auth()->id();
+        $data = $request->validated();
+        $user = $request->user();
+
         $main_address = Address::where('user_id', $user->id)
                                 ->where('is_main', 1)
                                 ->first();
+        $address = implode(' , ', $main_address->attributesToArray());
+
         $cartItems = CartItem::where('user_id', $user->id)->get();
+        $totalPrice = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
         try {
             DB::beginTransaction();
@@ -32,8 +37,13 @@ class OrderService
                 throw new OrderCreateException('Корзина пуста', 0);
             }
 
-            $totalPrice = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
-            $address = implode(' , ', $main_address->attributesToArray());
+            foreach ($cartItems as $item) {
+                if ($item->product->quantity < $item->quantity) {
+                    throw new OrderCreateException("Товара '{$item->product->title}' недостаточно на складе");
+                } else {
+                    $item->product->decrement('quantity', $item->quantity);
+                }
+            }
 
             $order = Order::create([
                 'user_id' => $user->id,
@@ -62,6 +72,8 @@ class OrderService
                 'order_id' => $order->id,
                 'total' => $totalPrice,
             ]);
+
+            DB::commit();
 
             return $order;
         } catch (\Throwable $e) {

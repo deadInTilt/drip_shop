@@ -16,8 +16,7 @@ class StoreController extends Controller
 
     public function __invoke(OrderRequest $request)
     {
-        $data = $request->validated();
-        $order = $this->service->create($data);
+        $order = $this->service->create($request);
 
         try {
             return redirect()->route('shop.catalog.index');

@@ -4,6 +4,7 @@ namespace App\Services\Shop\Cart;
 
 use App\Exceptions\Shop\Cart\CartItemOperationException;
 use App\Models\CartItem;
+use App\Models\Product;
 use App\Services\Logger\LoggerInterface;
 
 class CartService
@@ -32,12 +33,19 @@ class CartService
     {
         $data = $request->validated();
 
+        $productId = $data['product_id'];
+        $product = Product::findOrFail($productId);
         $quantity = $data['quantity'] ?? 1;
+        $userId = $request->user()->id;
+
+        if ($product->quantity < $quantity) {
+            throw new CartItemOperationException("Недостаточное количество товара '{$product->title}' в наличии");
+        }
 
         try {
-            $userId = auth()->id();
+
             $cartItem = CartItem::where('user_id', $userId)
-                ->where('product_id', $data['product_id'])
+                ->where('product_id', $productId)
                 ->first();
 
             if ($cartItem) {
@@ -46,13 +54,12 @@ class CartService
             } else {
                 CartItem::create([
                     'user_id' => $userId,
-                    'product_id' => $data['product_id'],
+                    'product_id' => $productId,
                     'quantity' => $quantity,
                 ]);
             }
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось добавить товар в корзину', 0, $e);
-
         }
 
     }
