@@ -3,60 +3,65 @@
 namespace App\Services\Shop\Cart;
 
 use App\Exceptions\Shop\Cart\CartItemOperationException;
+use App\Http\Requests\Shop\Cart\CartRequest;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Repositories\Shop\CartRepository;
+use App\Repositories\Shop\ProductRepository;
 use App\Services\Logger\LoggerInterface;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
     protected LoggerInterface $logger;
+    protected ProductRepository $productRepository;
+    protected CartRepository $cartRepository;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger,
+                                ProductRepository $productRepository,
+                                CartRepository $cartRepository,)
     {
         $this->logger = $logger;
+        $this->productRepository = $productRepository;
+        $this->cartRepository = $cartRepository;
     }
 
-    public function index()
+    public function getTotalPrice($cartItems): float
+    {
+        return $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
+    }
+
+    public function getCart(CartRequest $request): Collection
     {
         try {
-            $cartItems = CartItem::with('product')
-                ->where('user_id', auth()->id())
-                ->get();
-
+            $cartItems = $this->cartRepository->getItemsForUser($request->user()->id);
             return $cartItems;
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось получить корзину', 0, $e);
         }
 
     }
-    public function add($request)
+    public function addItemToCart(CartRequest $request)
     {
-        $data = $request->validated();
-
-        $productId = $data['product_id'];
-        $product = Product::findOrFail($productId);
-        $quantity = $data['quantity'] ?? 1;
-        $userId = $request->user()->id;
-
-        if ($product->quantity < $quantity) {
-            throw new CartItemOperationException("Недостаточное количество товара '{$product->title}' в наличии");
-        }
-
         try {
+            $data = $request->validated();
+            $productId = $data['product_id'];
+            $product = $this->productRepository->find($productId);
 
-            $cartItem = CartItem::where('user_id', $userId)
-                ->where('product_id', $productId)
-                ->first();
+            $quantity = $data['quantity'] ?? 1;
+            $userId = $request->user()->id;
 
-            if ($cartItem) {
-                $cartItem->quantity += $quantity;
-                $cartItem->save();
+            if ($product->quantity < $quantity) {
+                throw new CartItemOperationException("Недостаточное количество товара '{$product->title}' в наличии");
+            }
+
+            $item = $this->cartRepository->getItemFromCart($productId, $userId);
+
+            if ($item) {
+                $this->cartRepository->sumQuantity($item, $quantity);
             } else {
-                CartItem::create([
-                    'user_id' => $userId,
-                    'product_id' => $productId,
-                    'quantity' => $quantity,
-                ]);
+                $this->cartRepository->addNewItem($userId, $productId, $quantity);
             }
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось добавить товар в корзину', 0, $e);
@@ -64,27 +69,22 @@ class CartService
 
     }
 
-    public function remove(int $id)
+    public function removeItemFromCart(int $productId)
     {
         try {
-            $cartItem = CartItem::where('user_id', auth()->id())
-                ->where('product_id', $id)
-                ->first();
+            $userId = auth()->user()->id;
+            $item = $this->cartRepository->getItemFromCart($productId, $userId);
 
-            if (!$cartItem) {
+            if (!$item) {
                 $this->logger->warning('Попытка удалить несуществующий товар из корзины', [
                     'user_id' => auth()->id(),
-                    'product_id' => $id,
+                    'product_id' => $productId,
                 ]);
             }
 
-            if ($cartItem->quantity > 1) {
-                $cartItem->decrement('quantity');
-            } else {
-                $cartItem->delete();
-            }
+            $this->cartRepository->decrementOrDeleteItemFromCart($item);
         } catch (\Throwable $e) {
-            throw new CartItemOperationException('Не удалось удалить товар из крзины', 0, $e);
+            throw new CartItemOperationException('Не удалось удалить товар из корзины', 0, $e);
         }
     }
 }

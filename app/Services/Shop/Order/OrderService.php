@@ -3,68 +3,68 @@
 namespace App\Services\Shop\Order;
 
 use App\Exceptions\Shop\Order\OrderCreateException;
-use App\Models\Address;
-use App\Models\CartItem;
-use App\Models\Order;
+use App\Repositories\Shop\CartRepository;
+use App\Repositories\Shop\OrderRepository;
+use App\Repositories\Shop\ProductRepository;
 use App\Services\Logger\LoggerInterface;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Type\Decimal;
 
 class OrderService
 {
     protected LoggerInterface $logger;
-    public function __construct(LoggerInterface $logger)
+    protected CartRepository $cartRepository;
+    protected OrderRepository $orderRepository;
+
+    public function __construct(LoggerInterface $logger,
+                                OrderRepository $orderRepository,
+                                CartRepository $cartRepository,
+                                ProductRepository $productRepository)
     {
         $this->logger = $logger;
+        $this->orderRepository = $orderRepository;
+        $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
+    }
+
+    private function getTotalPrice($cartItems): float
+    {
+        return $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
     }
 
     public function create($request)
     {
-        $data = $request->validated();
-        $user = $request->user();
-
-        $main_address = Address::where('user_id', $user->id)
-                                ->where('is_main', 1)
-                                ->first();
-
-        $cartItems = CartItem::where('user_id', $user->id)->get();
-        $totalPrice = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
-
         try {
-            DB::beginTransaction();
+            $data = $request->validated();
+            $user = $request->user();
+
+            $cartItems = $this->cartRepository->getItemsForUser($user);
+            $totalPrice = $this->getTotalPrice($cartItems);
 
             if ($cartItems->isEmpty()) {
                 throw new OrderCreateException('Корзина пуста', 0);
             }
 
-            foreach ($cartItems as $item) {
-                if ($item->product->quantity < $item->quantity) {
-                    throw new OrderCreateException("Товара '{$item->product->title}' недостаточно на складе");
-                } else {
-                    $item->product->decrement('quantity', $item->quantity);
-                }
-            }
-
-            $order = Order::create([
+            $orderData = array_merge($data, [
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'phone' => $data['phone'],
-                'address' => $data['address'],
-                'delivery_method' => $data['delivery_method'],
-                'payment_method' => $data['payment_method'],
                 'total' => $totalPrice,
                 'status' => 'new'
             ]);
 
-            foreach ($cartItems as $item) {
-                $order->items()->create([
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->price,
-                ]);
+            DB::beginTransaction();
+
+            foreach ($cartItems as $item)
+            {
+                $this->productRepository->checkAndDecrementStock($item);
             }
 
-            CartItem::where('user_id', $user->id)->delete();
+            $order = $this->orderRepository->create($orderData);
+            $this->orderRepository->addItemsToOrder($order, $cartItems);
+            $this->cartRepository->clearCart($user);
+
+            DB::commit();
 
             $this->logger->info('Создан заказ', [
                 'user_id' => $user->id,
@@ -72,18 +72,10 @@ class OrderService
                 'total' => $totalPrice,
             ]);
 
-            DB::commit();
-
             return $order;
         } catch (\Throwable $e) {
             DB::rollBack();
-
             throw new OrderCreateException('Ошибка при создании заказа', 0, $e);
         }
-    }
-
-    public function index()
-    {
-
     }
 }

@@ -84,9 +84,9 @@
                                 </div>
                                 <div class="form-group">
                                     <select name="role_id" class="custom-select form-control-border" id="exampleSelectBorder">
-                                        <option {{ $user->role_id == 2 || old('role_id') == 2 ? 'selected' : '' }} value="2">User</option>
-                                        <option {{ $user->role_id == 1 || old('role_id') == 1 ? 'selected' : '' }} value="1">Admin</option>
-
+                                        @foreach($roles as $role)
+                                            <option {{ $user->role_id == $role->id || old('role_id') == $role->id ? 'selected' : '' }} value="{{$role->id}}">{{ $role->title }}</option>
+                                        @endforeach
                                     </select>
                                     @error('role_id')
                                     <div class="text-danger">{{ $message }}</div>

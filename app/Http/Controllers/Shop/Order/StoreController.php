@@ -17,5 +17,7 @@ class StoreController extends Controller
     {
         $order = $this->service->create($request);
 
+        return redirect()->route('shop.cart.index');
+
     }
 }

@@ -378,12 +378,12 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="breadcrumb-content text-center wow fadeInUp animated">
-                        <h2>Login</h2>
+                        <h2>Авторизация</h2>
                         <div class="breadcrumb-menu">
                             <ul>
-                                <li><a href="index.html"><i class="flaticon-home pe-2"></i>Главная</a></li>
+                                <li><a href="{{ route('shop.home.index') }}"><i class="flaticon-home pe-2"></i>Главная</a></li>
                                 <li> <i class="flaticon-next"></i> </li>
-                                <li class="active">Логин</li>
+                                <li class="active">Авторизация</li>
                             </ul>
                         </div>
                     </div>
@@ -400,7 +400,7 @@
                     <div class="login-register-form"
                          style="background-image: url({{ asset('shop/images/inner-pages/login-bg.png') }});">
                         <div class="top-title text-center ">
-                            <h2>Login</h2>
+                            <h2>Авторизация</h2>
                             <p>Нет аккаунта? <a href="{{ route('register') }}">Регистрация</a></p>
                         </div>
                         <form method="POST" action="{{ route('login') }}" class="common-form">
@@ -417,7 +417,7 @@
                                 <div class="icon icon-1">
                                     <i class="flaticon-hidden"></i>
                                 </div>
-                                <input type="password" id="password-field" class="form-control" name="password" placeholder="Password" required autocomplete="new-password">
+                                <input type="password" id="password-field" class="form-control" name="password" placeholder="Пароль" required autocomplete="new-password">
                                 <div class="icon icon-2 ">
                                     <i class="flaticon-visibility"></i>
                                 </div>
@@ -427,7 +427,7 @@
                             @enderror
 
                             <div class="checkk ">
-                                <a href="#0" class="forgot"> Забыли пароль?</a>
+                                <a href="{{ route('password.request') }}" class="forgot"> Забыли пароль?</a>
                             </div>
                             <button type="submit" class="btn--primary style2">Авторизоваться </button>
                         </form>
@@ -485,7 +485,7 @@
                         </div>
                         <div class="footer-address-box ">
                             <div class="text1 pt-3">
-                                <p>ул. Багратиона д. 53, офисное помещение №3</p>
+                                <p>ул. Багратиона д. 5, офисное помещение №53</p>
                             </div>
                             <div class="text3">
                                 <p>214000, г. Смоленск, Россия</p>

@@ -376,17 +376,17 @@
 
 <main class="overflow-hidden ">
     <!--Start Breadcrumb Style2-->
-    <section class="breadcrumb-area" style="background-image: url({{ asset('shop/images/inner-pages/breadcum-bg.png') }});">
+    <section class="breadcrumb-area" style="background-image: url({{ asset('storage/images/shoes/catalog_main.jpeg') }});">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="breadcrumb-content text-center wow fadeInUp animated">
-                        <h2>Register</h2>
+                        <h2>Регистрация</h2>
                         <div class="breadcrumb-menu">
                             <ul>
-                                <li><a href="index.html"><i class="flaticon-home pe-2"></i>Home</a></li>
+                                <li><a href="{{ route('shop.home.index') }}"><i class="flaticon-home pe-2"></i>Главная</a></li>
                                 <li> <i class="flaticon-next"></i> </li>
-                                <li class="active">Register</li>
+                                <li class="active">Регистрация</li>
                             </ul>
                         </div>
                     </div>
@@ -403,19 +403,19 @@
                     <div class="login-register-form"
                          style="background-image: url('{{ asset('shop/images/inner-pages/login-bg.png') }}');">
                         <div class="top-title text-center ">
-                            <h2>Register</h2>
-                            <p>Already have an account? <a href="{{ route('login') }}">Log in</a></p>
+                            <h2>Регистрация</h2>
+                            <p>Уже есть аккаунт? <a href="{{ route('login') }}">Войти</a></p>
                         </div>
                         <form action="{{ route('register') }}" method="POST" class="common-form">
                             @csrf
                             <div class="form-group">
-                                <input type="text" class="form-control" name="name" placeholder="Your Name" value="{{ old('name') }}" required autofocus autocomplete="name">
+                                <input type="text" class="form-control" name="name" placeholder="Имя" value="{{ old('name') }}" required autofocus autocomplete="name">
                             </div>
                             @error('name')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-group">
-                                <input type="text" class="form-control" name="email" placeholder="Your Email" value="{{ old('email')}}" required autocomplete="email" >
+                                <input type="text" class="form-control" name="email" placeholder="Email" value="{{ old('email')}}" required autocomplete="email" >
                             </div>
                             @error('email')
                             <div class="text-danger">{{ $message }}</div>
@@ -424,7 +424,7 @@
                                 <div class="icon icon-1">
                                     <i class="flaticon-hidden"></i>
                                 </div>
-                                <input type="password" id="password-field" class="form-control" name="password" placeholder="Password" required autocomplete="new-password">
+                                <input type="password" id="password-field" class="form-control" name="password" placeholder="Пароль" required autocomplete="new-password">
                                 <div class="icon icon-2 ">
                                     <i class="flaticon-visibility"></i>
                                 </div>
@@ -436,7 +436,7 @@
                                 <div class="icon icon-1">
                                     <i class="flaticon-hidden"></i>
                                 </div>
-                                <input type="password" id="password-field" class="form-control" name="password_confirmation" placeholder="Confirm password" required autocomplete="new-password">
+                                <input type="password" id="password-field" class="form-control" name="password_confirmation" placeholder="Подтверждение пароля" required autocomplete="new-password">
                                 <div class="icon icon-2 ">
                                     <i class="flaticon-visibility"></i>
                                 </div>
@@ -500,7 +500,7 @@
                         </div>
                         <div class="footer-address-box ">
                             <div class="text1 pt-3">
-                                <p>ул. Багратиона д. 53, офисное помещение №3</p>
+                                <p>ул. Багратиона д. 5, офисное помещение №53</p>
                             </div>
                             <div class="text3">
                                 <p>214000, г. Смоленск, Россия</p>

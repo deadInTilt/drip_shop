@@ -46,8 +46,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
 
     Route::group(['namespace' => 'Cart', 'prefix' => 'cart'], function () {
         Route::get('/', [CartController::class, 'index'])->name('shop.cart.index');
-        Route::post('/add', [CartController::class, 'add'])->name('shop.cart.add');
-        Route::delete('/{item}', [CartController::class, 'remove'])->name('shop.cart.remove');
+        Route::post('/add', [CartController::class, 'addItemToCart'])->name('shop.cart.add');
+        Route::delete('/{item}', [CartController::class, 'removeItemFromCart'])->name('shop.cart.remove');
     });
 
     Route::group(['namespace' => 'Product', 'prefix' => 'product'], function () {

@@ -16,26 +16,24 @@ class CartController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(CartRequest $request)
     {
-        $cartItems = $this->service->index();
-        $totalPrice = $cartItems->sum(function ($item) {
-            return $item->product->price * $item->quantity;
-        });
+        $cartItems = $this->service->getCart($request);
+        $totalPrice = $this->service->getTotalPrice($cartItems);
 
         return view('shop.cart.index', compact('cartItems', 'totalPrice'));
     }
 
-    public function add(CartRequest $request)
+    public function addItemToCart(CartRequest $request)
     {
-        $this->service->add($request);
+        $this->service->addItemToCart($request);
 
         return redirect()->back()->with('success', 'Товар добавлен в корзину');
     }
 
-    public function remove(int $id)
+    public function removeItemFromCart(int $productId)
     {
-        $this->service->remove($id);
+        $this->service->removeItemFromCart($productId);
 
         return redirect()->back()->with('success', 'Товар удален из корзины');
     }

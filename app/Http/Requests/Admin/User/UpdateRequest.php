@@ -28,8 +28,14 @@ class UpdateRequest extends FormRequest
             'age' => 'nullable|integer',
             'gender' => 'nullable|integer',
             'phone' => 'nullable|string',
-            'address' => 'nullable|string',
+            'address_id' => 'nullable|string',
             'role_id' => 'nullable|integer',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
         ];
     }
 }
