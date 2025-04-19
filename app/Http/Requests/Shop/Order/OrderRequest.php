@@ -22,8 +22,18 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|size:12|regex:/^\+7\d{10}$/',
             'payment_method' => 'required|string',
             'delivery_method' => 'required|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'Формат телефона должен быть +7...',
+            'phone.size' => 'Формат телефона должен иметь 12 символов',
         ];
     }
 }

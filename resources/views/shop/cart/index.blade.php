@@ -2,7 +2,7 @@
 @section('content')
     <main class="overflow-hidden ">
         <!--Start Breadcrumb Style2-->
-        <section class="breadcrumb-area" style="background-image: url({{ asset('shop/images/inner-pages/breadcum-bg.png') }});">
+        <section class="breadcrumb-area" style="background-image: url({{ asset('storage/images/shoes/catalog_main.jpeg') }});">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -10,7 +10,7 @@
                             <h2>Корзина</h2>
                             <div class="breadcrumb-menu">
                                 <ul>
-                                    <li><a href="index.html"><i class="flaticon-home pe-2"></i>Главная</a></li>
+                                    <li><a href="{{ route('shop.home.index') }}"><i class="flaticon-home pe-2"></i>Главная</a></li>
                                     <li> <i class="flaticon-next"></i> </li>
                                     <li class="active">Корзина</li>
                                 </ul>

@@ -70,8 +70,19 @@
                     <div class="col-4 text-end">
                         <div class="right d-flex align-items-center justify-content-end">
                             <ul class="main-menu__widge-box d-flex align-items-center ">
-                                <li class="d-lg-block d-none"><a href="{{ route('admin.index') }}"><i
-                                            class="flaticon-user"></i> </a></li>
+                                @if(auth()->user()->role->title === 'customer')
+                                <li class="d-lg-block d-none">
+                                    <a href="{{ route('shop.account.index') }}">
+                                        <i class="flaticon-user"></i>
+                                    </a>
+                                </li>
+                                @else
+                                    <li class="d-lg-block d-none">
+                                        <a href="{{ route('admin.index') }}">
+                                            <i class="flaticon-user"></i>
+                                        </a>
+                                    </li>
+                                @endif
                                 <li class="d-lg-block d-none"><a href="wishlist.html" class="number"> <i
                                             class="flaticon-heart"></i> </a> </li>
                                 <li class="cartm"> <a href="#0" class="number cart-icon"> <i

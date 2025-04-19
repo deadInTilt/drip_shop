@@ -10,7 +10,7 @@
                             <h2>Каталог</h2>
                             <div class="breadcrumb-menu">
                                 <ul>
-                                    <li><a href="index.html"><i class="flaticon-home pe-2"></i>Главная</a></li>
+                                    <li><a href="{{ route('shop.home.index') }}"><i class="flaticon-home pe-2"></i>Главная</a></li>
                                     <li> <i class="flaticon-next"></i> </li>
                                     <li class="active">Каталог</li>
                                 </ul>
@@ -463,7 +463,7 @@
                                                                             <span>(123)</span> </div>
                                                                         <p class="text"> {{ $product->description }} </p>
                                                                         <div class="price">
-                                                                            <h2> {{ $product->price }} РУБ <del> 20000 РУБ </del></h2>
+                                                                            <h2> {{ $product->price }} РУБ</h2>
                                                                             <h6> В наличии</h6>
                                                                         </div>
                                                                         <div class="color-varient"> <a href="#0"

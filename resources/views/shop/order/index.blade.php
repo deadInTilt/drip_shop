@@ -2,7 +2,7 @@
 @section('content')
     <main class="overflow-hidden ">
         <!--Start Breadcrumb Style2-->
-        <section class="breadcrumb-area" style="background-image: url({{ asset('shop/images/inner-pages/breadcum-bg.png') }});">
+        <section class="breadcrumb-area" style="background-image: url({{ asset('storage/images/shoes/catalog_main.jpeg') }});">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -46,16 +46,26 @@
                                                     <th colspan="1" class="shipping-title"><b>Контактные данные</b></th>
                                                 </tr>
                                                 <tr>
-                                                    <th colspan="1" class="shipping-title">Адрес</th>
-                                                    <th colspan="1" class="shipping-title">{{ $user->mainAddress->name }}</th>
-                                                </tr>
-                                                <tr>
                                                     <th colspan="1" class="shipping-title">Почта</th>
                                                     <th colspan="1" class="shipping-title">{{ $user->email }}</th>
                                                 </tr>
                                                 <tr>
+                                                    <th colspan="1" class="shipping-title">Адрес</th>
+                                                    <th colspan="1" class="shipping-title">
+                                                        <input type="text" name="address" value="{{ old('address') }}" class="form-control" required>
+                                                    @error('address')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                    </th>
+                                                </tr>
+                                                <tr>
                                                     <th colspan="1" class="shipping-title">Телефон</th>
-                                                    <th colspan="1" class="shipping-title">{{ $user->phone }}</th>
+                                                    <th colspan="1" class="shipping-title">
+                                                        <input type="text" name="phone" value="{{ old('phone') }}" class="form-control" placeholder="+7" required>
+                                                    @error('phone')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>

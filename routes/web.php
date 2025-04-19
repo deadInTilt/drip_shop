@@ -36,6 +36,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
         Route::get('/', 'IndexController')->name('shop.home.index');
     });
 
+    Route::group(['namespace' => 'Account', 'prefix' => 'account'], function () {
+        Route::get('/', 'IndexController')->name('shop.account.index');
+    });
+
     Route::group(['namespace' => 'Catalog', 'prefix' => 'catalog'], function () {
         Route::get('/', 'IndexController')->name('shop.catalog.index');
     });
@@ -145,5 +149,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::get('/{group}/edit', 'EditController')->name('admin.group.edit');
         Route::patch('/{group}', 'UpdateController')->name('admin.group.update');
         Route::delete('/{group}', 'DeleteController')->name('admin.group.delete');
+    });
+
+    Route::group(['namespace' => 'Order', 'prefix' => 'orders'], function () {
+        Route::get('/', 'IndexController')->name('admin.order.index');
+        Route::get('/{order}', 'ShowController')->name('admin.order.show');
+//        Route::get('/{order}/edit', 'EditController')->name('admin.order.edit');
+//        Route::patch('/{order}', 'UpdateController')->name('admin.order.update');
+        Route::delete('/{order}', 'DeleteController')->name('admin.order.delete');
     });
 });

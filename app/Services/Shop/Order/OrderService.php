@@ -25,7 +25,6 @@ class OrderService
         $main_address = Address::where('user_id', $user->id)
                                 ->where('is_main', 1)
                                 ->first();
-        $address = implode(' , ', $main_address->attributesToArray());
 
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $totalPrice = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
@@ -49,8 +48,8 @@ class OrderService
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'phone' => $user->phone,
-                'address' => $address,
+                'phone' => $data['phone'],
+                'address' => $data['address'],
                 'delivery_method' => $data['delivery_method'],
                 'payment_method' => $data['payment_method'],
                 'total' => $totalPrice,
