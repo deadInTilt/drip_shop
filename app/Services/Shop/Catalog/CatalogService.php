@@ -13,48 +13,10 @@ use Illuminate\Http\Request;
 
 class CatalogService
 {
-    public function getProducts()
-    {
-        return Product::all();
-    }
 
-    public function getCategories()
+    public function getFilteredAndSortedProducts(Request $request)
     {
-        return Category::all();
-    }
-
-    public function getTags()
-    {
-        return Tag::all();
-    }
-
-    public function getBrands()
-    {
-        return Brand::select('id', 'title')->has('products')->get();
-    }
-
-    public function getGroups()
-    {
-        return Group::select('id', 'title')->has('products')->get();
-    }
-
-    public function getColors()
-    {
-        return Color::all();
-    }
-
-    public function getPriceRange(): array
-    {
-        $max = Product::orderByDesc('price')->first();
-        $min = Product::orderBy('price')->first();
-        return [
-            'min' => $min,
-            'max' => $max,
-        ];
-    }
-
-    public function getFilteredAndSortedProducts(Request $request, CatalogFilter $filter)
-    {
+        $filter = new CatalogFilter($request->query());
         $query = Product::filter($filter);
 
         if ($search = $request->input('search')) {

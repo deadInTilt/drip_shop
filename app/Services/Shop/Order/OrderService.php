@@ -2,6 +2,7 @@
 
 namespace App\Services\Shop\Order;
 
+use App\Events\OrderCreated;
 use App\Exceptions\Shop\Order\OrderCreateException;
 use App\Repositories\Shop\CartRepository;
 use App\Repositories\Shop\OrderRepository;
@@ -27,11 +28,6 @@ class OrderService
         $this->productRepository = $productRepository;
     }
 
-    private function getTotalPrice($cartItems): float
-    {
-        return $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
-    }
-
     public function create($request)
     {
         try {
@@ -39,7 +35,7 @@ class OrderService
             $user = $request->user();
 
             $cartItems = $this->cartRepository->getItemsForUser($user);
-            $totalPrice = $this->getTotalPrice($cartItems);
+            $totalPrice = $this->cartRepository->getTotalPrice($cartItems);
 
             if ($cartItems->isEmpty()) {
                 throw new OrderCreateException('Корзина пуста', 0);
@@ -61,6 +57,7 @@ class OrderService
             }
 
             $order = $this->orderRepository->create($orderData);
+            OrderCreated::dispatch($order);
             $this->orderRepository->addItemsToOrder($order, $cartItems);
             $this->cartRepository->clearCart($user);
 

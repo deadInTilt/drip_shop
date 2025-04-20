@@ -51,4 +51,9 @@ class CartRepository
             $item->delete();
         }
     }
+
+    public function getTotalPrice($cartItems)
+    {
+        return $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
+    }
 }

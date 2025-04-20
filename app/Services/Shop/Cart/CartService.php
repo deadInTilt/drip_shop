@@ -63,6 +63,8 @@ class CartService
             } else {
                 $this->cartRepository->addNewItem($userId, $productId, $quantity);
             }
+
+            $this->logger->info("Товар '{$product->id}' добавлен в корзину пользователем '{$userId}'");
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось добавить товар в корзину', 0, $e);
         }
@@ -83,6 +85,9 @@ class CartService
             }
 
             $this->cartRepository->decrementOrDeleteItemFromCart($item);
+
+            $this->logger->info("Товар '{$productId}' удален из корзины пользователем '{$userId}'");
+
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось удалить товар из корзины', 0, $e);
         }
