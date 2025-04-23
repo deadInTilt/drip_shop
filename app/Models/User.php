@@ -87,4 +87,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new SendVerifyWithQueueNotification());
     }
+
+    public function hasPermission($permission): bool
+    {
+        if ($this->role->permissions->contains('title', $permission)) {
+            return true;
+        } else {
+        return false;
+        }
+    }
 }

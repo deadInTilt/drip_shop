@@ -178,6 +178,7 @@
                             </p>
                         </a>
                     </li>
+                    @can('view-products')
                     <li class="nav-item">
                         <a href="{{ route('admin.product.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tshirt"></i>
@@ -186,6 +187,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-categories')
                     <li class="nav-item">
                         <a href="{{ route('admin.category.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-list"></i>
@@ -194,6 +197,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-tags')
                     <li class="nav-item">
                         <a href="{{ route('admin.tag.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tags"></i>
@@ -202,6 +207,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-colors')
                     <li class="nav-item">
                         <a href="{{ route('admin.color.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-palette"></i>
@@ -210,6 +217,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-users')
                     <li class="nav-item">
                         <a href="{{ route('admin.user.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -218,6 +227,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-brands')
                     <li class="nav-item">
                         <a href="{{ route('admin.brand.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-copyright"></i>
@@ -226,6 +237,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-brands')
                     <li class="nav-item">
                         <a href="{{ route('admin.group.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tasks"></i>
@@ -234,6 +247,8 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
+                    @can('view-roles')
                     <li class="nav-item">
                         <a href="{{ route('admin.role.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-tag"></i>
@@ -242,6 +257,7 @@
                             </p>
                         </a>
                     </li>
+                    @endcan
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
