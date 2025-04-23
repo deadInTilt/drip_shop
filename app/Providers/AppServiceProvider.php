@@ -2,13 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Brand;
+use App\Observers\BrandObserver;
 use App\Services\Logger\FileLogger;
 use App\Services\Logger\LoggerInterface;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Connection;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -26,11 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //Model::preventLazyLoading(!app()->isProduction());
         Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
-
-        DB::whenQueryingForLongerThan(500, function (Connection $connection) {
-           // TODO
-        });
+        Brand::observe(BrandObserver::class);
     }
 }
