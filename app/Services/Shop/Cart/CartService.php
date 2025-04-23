@@ -4,13 +4,11 @@ namespace App\Services\Shop\Cart;
 
 use App\Exceptions\Shop\Cart\CartItemOperationException;
 use App\Http\Requests\Shop\Cart\CartRequest;
-use App\Models\CartItem;
-use App\Models\Product;
 use App\Repositories\Shop\CartRepository;
 use App\Repositories\Shop\ProductRepository;
 use App\Services\Logger\LoggerInterface;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class CartService
 {
@@ -32,10 +30,10 @@ class CartService
         return $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
     }
 
-    public function getCart(CartRequest $request): Collection
+    public function getCart(Request $request): Collection
     {
         try {
-            $cartItems = $this->cartRepository->getItemsForUser($request->user()->id);
+            $cartItems = $this->cartRepository->getItemsForUser($request->user());
             return $cartItems;
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось получить корзину', 0, $e);

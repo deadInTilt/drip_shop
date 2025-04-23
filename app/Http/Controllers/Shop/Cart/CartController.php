@@ -16,12 +16,12 @@ class CartController extends Controller
         $this->service = $service;
     }
 
-    public function index(CartRequest $request)
+    public function index(Request $request)
     {
-        $cartItems = $this->service->getCart($request);
-        $totalPrice = $this->service->getTotalPrice($cartItems);
+            $cartItems = $this->service->getCart($request);
+            $totalPrice = $this->service->getTotalPrice($cartItems);
 
-        return view('shop.cart.index', compact('cartItems', 'totalPrice'));
+            return view('shop.cart.index', compact('cartItems', 'totalPrice'));
     }
 
     public function addItemToCart(CartRequest $request)
