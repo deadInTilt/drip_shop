@@ -2,14 +2,15 @@
 
 namespace App\Services\Shop\Order;
 
+use App\Events\OrderCancelled;
 use App\Events\OrderCreated;
 use App\Exceptions\Shop\Order\OrderCreateException;
+use App\Models\Order;
 use App\Repositories\Shop\CartRepository;
 use App\Repositories\Shop\OrderRepository;
 use App\Repositories\Shop\ProductRepository;
 use App\Services\Logger\LoggerInterface;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Type\Decimal;
 
 class OrderService
 {
@@ -51,13 +52,11 @@ class OrderService
 
             DB::beginTransaction();
 
-            foreach ($cartItems as $item)
-            {
+            foreach ($cartItems as $item) {
                 $this->productRepository->checkAndDecrementStock($item);
             }
 
             $order = $this->orderRepository->create($orderData);
-            OrderCreated::dispatch($order);
             $this->orderRepository->addItemsToOrder($order, $cartItems);
             $this->cartRepository->clearCart($user);
 
@@ -74,5 +73,26 @@ class OrderService
             DB::rollBack();
             throw new OrderCreateException('Ошибка при создании заказа', 0, $e);
         }
+    }
+
+    public function initiatePayment(Order $order)
+    {
+        return redirect()->route('shop.payment.fake-gateway', [$order->id]);
+    }
+
+    public function paid(Order $order): void
+    {
+        $order->status = 'paid';
+        $order->save();
+
+        OrderCreated::dispatch($order);
+    }
+
+    public function cancel(Order $order): void
+    {
+        $order->status = 'cancelled';
+        $order->save();
+
+        OrderCancelled::dispatch($order);
     }
 }

@@ -16,8 +16,8 @@ class StoreController extends Controller
     public function __invoke(OrderRequest $request)
     {
         $order = $this->service->create($request);
+//      $this->service->initiatePayment($order);
 
-        return redirect()->route('shop.cart.index');
-
+        return redirect()->route('shop.payment.fake-gateway', [$order->id]);
     }
 }

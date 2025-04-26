@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\OrderCancelled;
 use App\Events\OrderCreated;
+use App\Listeners\BackItemsToCartListener;
 use App\Listeners\NewOrderEmailNotificationListener;
+use App\Listeners\ReleaseStockOnCancelListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderCreated::class => [
             NewOrderEmailNotificationListener::class,
+        ],
+        OrderCancelled::class => [
+            ReleaseStockOnCancelListener::class,
+            BackItemsToCartListener::class,
         ]
     ];
 

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('payment_method');
             $table->decimal('total', 10,2);
-            $table->enum('status', ['new', 'paid', 'shipped', 'delivered', 'cancelled'])->default('new');
+            $table->enum('status', ['new', 'pending', 'paid', 'shipped', 'delivered', 'cancelled'])->default('new');
 
             $table->foreign('user_id')->on('users')->references('id')->nullOnDelete();
 

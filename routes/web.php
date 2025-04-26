@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Shop\Cart\CartController;
 use App\Http\Controllers\Shop\Catalog\IndexController;
+use App\Http\Controllers\Shop\Payment\FakeGatewayController;
+use App\Http\Controllers\Shop\Payment\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +61,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
         Route::post('/', 'StoreController')->name('shop.order.store');
     });
 
+    Route::group(['namespace' => 'Payment', 'prefix' => 'payment', 'middleware' => ['auth']], function () {
+        Route::get('/checkout/{orderId}', [PaymentController::class, 'initiate'])->name('shop.payment.initiate');
+        Route::get('/fake-gateway/{orderId}', [FakeGatewayController::class, 'showForm'])->name('shop.payment.fake-gateway');
+        Route::post('/fake-gateway/process', [FakeGatewayController::class, 'processPayment'])->name('shop.payment.process');
+        Route::post('/callback', [PaymentController::class, 'callback'])->name('shop.payment.callback');
+        Route::get('/status/{orderId}', [PaymentController::class, 'status'])->name('shop.payment.status');
+    });
 });
 
 
