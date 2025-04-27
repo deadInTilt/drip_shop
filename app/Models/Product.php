@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\Filterable;
+use App\Models\Traits\HasThumbnail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,7 @@ class Product extends Model
 {
     use HasFactory;
     use Filterable;
+    use HasThumbnail;
 
     protected $table = 'products';
     protected $guarded = false;
@@ -19,6 +21,10 @@ class Product extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');
+    }
+    function thumbnailDir(): string
+    {
+        return 'shoes';
     }
 
     public function category(): BelongsTo
@@ -45,4 +51,5 @@ class Product extends Model
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
     }
+
 }

@@ -43,6 +43,6 @@ class CatalogService
             };
         }
 
-        return $query->paginate(3);
+        return $query->paginate(6);
     }
 }

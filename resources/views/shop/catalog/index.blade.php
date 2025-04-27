@@ -29,15 +29,15 @@
                         <div class="product-categories-one__inner">
                             <ul>
                                 @foreach($categories as $category)
-                                <li> <a href="{{ route('shop.catalog.index', ['category_id' => $category->id]) }}" class="img-box">
-                                        <div class="inner">
-                                            <img src="{{ asset('storage') . '/' . $category->preview_image }}" alt="" />
-                                        </div>
-                                    </a>
-                                    <div class="title"> <a href="#0">
-                                            <h6>{{ $category->title }}</h6>
-                                        </a> </div>
-                                </li>
+                                    <li> <a href="{{ route('shop.catalog.index', ['category_id' => $category->id]) }}" class="img-box">
+                                            <div class="inner">
+                                                <img src="{{ asset($category->makeThumbnail('70x70')) }}" alt="" />
+                                            </div>
+                                        </a>
+                                        <div class="title"> <a href="#0">
+                                                <h6>{{ $category->title }}</h6>
+                                            </a> </div>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
@@ -292,9 +292,9 @@
                                                 <div class="products-three-single  wow w-100 ">
                                                     <div class="products-three-single-img">
                                                         <a href="{{ route('shop.product.index', $product->id) }}" class="d-block"> <img
-                                                                src="{{ asset('storage/' . $product->preview_image) }}"
+                                                                src="{{ asset($product->makeThumbnail('1000x1200')) }}"
                                                                 class="first-img" alt="" />
-                                                            <img src="{{ asset('storage/' . $product->preview_image) }}"
+                                                            <img src="{{ asset($product->makeThumbnail('1000x1200')) }}"
                                                                  alt="" class="hover-img" />
                                                         </a>
                                                         <form action="{{ route('shop.cart.add') }}" method="POST">

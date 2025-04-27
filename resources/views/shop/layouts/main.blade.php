@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-4 text-center">
                         <div class="middle"> <a href="{{ route('shop.home.index') }}" class="logo"> <img
-                                    src="{{ asset('storage/images/drip_logo_header.png') }}" alt=""> </a> </div>
+                                    src="{{ route('thumbnail', ['logos', 'resize', '50x50', 'drip_logo_1.png']) }}" alt=""> </a> </div>
                     </div>
                     <div class="col-4 text-end">
                         <div class="right d-flex align-items-center justify-content-end">
@@ -337,7 +337,7 @@
                     <div class="items d-flex justify-content-between align-items-center">
                         <div class="left d-flex align-items-center">
                             <a href="{{ route('shop.product.index', $item->product->id) }}" class="thumb d-flex justify-content-between align-items-center">
-                                <img src="{{ asset('storage') . '/' . $item->product->preview_image }}" alt="">
+                                <img src="{{ asset($item->product->makeThumbnail('1000x1200')) }}" alt="">
                             </a>
                             <div class="text"> <a href="shop-details-1.html">
                                     <h6>{{ $item->product->title }}</h6>
@@ -441,7 +441,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-30 wow fadeInUp animated">
                     <div class="footer-default__single-box">
                         <div class="company-info">
-                            <div class="footer-logo"> <a href="index.html"> <img src="{{ asset('storage/images/drip_logo_footer.png') }}"
+                            <div class="footer-logo"> <a href="index.html"> <img src="{{ route('thumbnail', ['logos', 'resize', '150x150', 'drip_logo_1.png']) }}"
                                                                                  alt=""> </a> </div>
                             <div class="text1">
                                 <p>Интернет-магазин</p>

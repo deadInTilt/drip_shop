@@ -5,6 +5,7 @@ use App\Http\Controllers\Shop\Cart\CartController;
 use App\Http\Controllers\Shop\Catalog\IndexController;
 use App\Http\Controllers\Shop\Payment\FakeGatewayController;
 use App\Http\Controllers\Shop\Payment\PaymentController;
+use App\Http\Controllers\ThumbnailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,6 +71,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
     });
 });
 
+Route::get('/storage/images/{dir}/{method}/{size}/{file}', ThumbnailController::class)
+     ->where('method', 'resize|crop|fit')
+     ->where('size', '\d+x\d+')
+     ->where('file', '.+\.(png|jpg|jpeg|gif|webp)$')
+     ->name('thumbnail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
