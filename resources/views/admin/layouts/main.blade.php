@@ -170,6 +170,7 @@
                             </p>
                         </a>
                     </li>
+                    @can('has-permission','view-orders')
                     <li class="nav-item">
                         <a href="{{ route('admin.order.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-shopping-bag"></i>
@@ -178,7 +179,8 @@
                             </p>
                         </a>
                     </li>
-                    @can('view-products')
+                    @endcan
+                    @can('has-permission','view-products')
                     <li class="nav-item">
                         <a href="{{ route('admin.product.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tshirt"></i>
@@ -188,7 +190,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-categories')
+                    @can('has-permission','view-categories')
                     <li class="nav-item">
                         <a href="{{ route('admin.category.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-list"></i>
@@ -198,7 +200,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-tags')
+                    @can('has-permission','view-tags')
                     <li class="nav-item">
                         <a href="{{ route('admin.tag.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tags"></i>
@@ -208,7 +210,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-colors')
+                    @can('has-permission','view-colors')
                     <li class="nav-item">
                         <a href="{{ route('admin.color.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-palette"></i>
@@ -218,7 +220,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-users')
+                    @can('has-permission','view-users')
                     <li class="nav-item">
                         <a href="{{ route('admin.user.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -228,7 +230,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-brands')
+                    @can('has-permission','view-brands')
                     <li class="nav-item">
                         <a href="{{ route('admin.brand.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-copyright"></i>
@@ -238,7 +240,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-brands')
+                    @can('has-permission','view-brands')
                     <li class="nav-item">
                         <a href="{{ route('admin.group.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tasks"></i>
@@ -248,7 +250,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('view-roles')
+                    @can('has-permission','view-roles')
                     <li class="nav-item">
                         <a href="{{ route('admin.role.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-tag"></i>

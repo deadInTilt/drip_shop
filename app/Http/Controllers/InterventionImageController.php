@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\MakeThumbnailException;
+use App\Exceptions\InterventionImageException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 
-class ThumbnailController extends Controller
+class InterventionImageController extends Controller
 {
     public function __invoke(string $dir,
                              string $method,
@@ -41,7 +41,7 @@ class ThumbnailController extends Controller
             }
 
             if (!file_exists($storage->path("$dir/$file"))) {
-                throw new MakeThumbnailException('Файл не найден: ' . $storage->path("$dir/$file"));
+                throw new InterventionImageException('Файл не найден: ' . $storage->path("$dir/$file"));
             }
 
             if (!$storage->exists($resultPath)) {
@@ -57,7 +57,7 @@ class ThumbnailController extends Controller
             }
             return response()->file($storage->path($resultPath));
         } catch (\Throwable $e) {
-            throw new MakeThumbnailException('Ошибка при генерации изображения', 0, $e);
+            throw new InterventionImageException('Ошибка при генерации изображения', 0, $e);
         }
     }
 }

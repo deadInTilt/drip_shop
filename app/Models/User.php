@@ -90,7 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasPermission($permission): bool
     {
-        if ($this->role->permissions->contains('title', $permission)) {
+        if ($this->role->permissions->pluck('title')->contains($permission)) {
             return true;
         } else {
         return false;

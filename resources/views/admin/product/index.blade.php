@@ -28,6 +28,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <a href="{{ route('admin.product.create') }}" class="btn btn-primary">Создать</a>
+                                    <a href="{{ route('admin.product.import-index') }}" class="btn btn-primary">Загрузить</a>
                                 </div>
                                 <div class="card-body table-responsive p-0">
                                     <table class="table table-hover text-nowrap">

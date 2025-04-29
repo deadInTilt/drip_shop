@@ -10,7 +10,7 @@ trait HasThumbnail
 
     public function makeThumbnail(string $size, string $method = 'resize'): string
     {
-        return route('thumbnail', [
+        return route('intervention-image', [
             'size' => $size,
             'dir' => $this->thumbnailDir(),
             'method' => $method,

@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\Product\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Shop\Cart\CartController;
 use App\Http\Controllers\Shop\Catalog\IndexController;
 use App\Http\Controllers\Shop\Payment\FakeGatewayController;
 use App\Http\Controllers\Shop\Payment\PaymentController;
-use App\Http\Controllers\ThumbnailController;
+use App\Http\Controllers\InterventionImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,11 +72,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
     });
 });
 
-Route::get('/storage/images/{dir}/{method}/{size}/{file}', ThumbnailController::class)
+Route::get('/storage/images/{dir}/{method}/{size}/{file}', InterventionImageController::class)
      ->where('method', 'resize|crop|fit')
      ->where('size', '\d+x\d+')
      ->where('file', '.+\.(png|jpg|jpeg|gif|webp)$')
-     ->name('thumbnail');
+     ->name('intervention-image');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -139,6 +140,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
     Route::group(['namespace' => 'Product', 'prefix' => 'products'], function () {
         Route::get('/', 'IndexController')->name('admin.product.index')->middleware(['permission:view-products']);
         Route::get('/create', 'CreateController')->name('admin.product.create')->middleware(['permission:create-products']);
+        Route::get('/import', [ImportController::class, 'index'])->name('admin.product.import-index')->middleware(['permission:create-products']);
+        Route::post('/import', [ImportController::class, 'import'])->name('admin.product.import')->middleware(['permission:create-products']);
         Route::post('/', 'StoreController')->name('admin.product.store')->middleware(['permission:create-products']);
         Route::get('/{product}', 'ShowController')->name('admin.product.show')->middleware(['permission:view-products']);
         Route::get('/{product}/edit', 'EditController')->name('admin.product.edit')->middleware(['permission:edit-products']);

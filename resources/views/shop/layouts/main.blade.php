@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-4 text-center">
                         <div class="middle"> <a href="{{ route('shop.home.index') }}" class="logo"> <img
-                                    src="{{ route('thumbnail', ['logos', 'resize', '50x50', 'drip_logo_1.png']) }}" alt=""> </a> </div>
+                                    src="{{ route('intervention-image', ['logos', 'resize', '50x50', 'drip_logo_1.png']) }}" alt=""> </a> </div>
                     </div>
                     <div class="col-4 text-end">
                         <div class="right d-flex align-items-center justify-content-end">
@@ -441,7 +441,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-30 wow fadeInUp animated">
                     <div class="footer-default__single-box">
                         <div class="company-info">
-                            <div class="footer-logo"> <a href="index.html"> <img src="{{ route('thumbnail', ['logos', 'resize', '150x150', 'drip_logo_1.png']) }}"
+                            <div class="footer-logo"> <a href="index.html"> <img src="{{ route('intervention-image', ['logos', 'resize', '150x150', 'drip_logo_1.png']) }}"
                                                                                  alt=""> </a> </div>
                             <div class="text1">
                                 <p>Интернет-магазин</p>
