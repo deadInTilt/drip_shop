@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Product;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -12,7 +12,7 @@ class ProductResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request): array
     {
         return [
            'title'=> $this->title,
@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
            'brand' => $this->brand->title,
            'category' => $this->category->title,
            'tags' => $this->tags->pluck('title')->toArray(),
-           'image_url' => $this->imageUrl,
+           'image_url' => $this->preview_image,
         ];
     }
 }

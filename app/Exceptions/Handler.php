@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,11 +31,25 @@ class Handler extends ExceptionHandler
     }
 
     public function render($request, Throwable $exception)
+{
+    if ($request->expectsJson()) {
+        return response()->json([
+            'message' => $exception instanceof NotFoundHttpException
+                ? 'Route not found'
+                : $exception->getMessage(),
+            'exception' => class_basename($exception),
+        ], $this->getStatusCode($exception));
+    }
+
+    return parent::render($request, $exception);
+}
+
+    private function getStatusCode(Throwable $exception): int
     {
-        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
-            return response()->view('errors.404', [], 404);
+        if ($exception instanceof HttpExceptionInterface) {
+            return $exception->getStatusCode();
         }
 
-        return parent::render($request, $exception);
+        return 500;
     }
 }

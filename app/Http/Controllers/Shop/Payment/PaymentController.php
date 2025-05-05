@@ -9,7 +9,7 @@ use App\Repositories\Shop\CartRepository;
 use App\Services\Shop\Order\OrderService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class PaymentController
+class   PaymentController
 {
     protected $orderService;
     protected $cartRepository;
