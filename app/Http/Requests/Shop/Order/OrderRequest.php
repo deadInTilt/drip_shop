@@ -22,7 +22,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address' => 'required|string|max:255',
+            'address_id' => 'required|integer',
             'phone' => 'required|string|size:12|regex:/^\+7\d{10}$/',
             'payment_method' => 'required|string',
             'delivery_method' => 'required|string',

@@ -44,6 +44,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
         Route::get('/', 'IndexController')->name('shop.account.index');
     });
 
+    Route::group(['namespace' => 'Address', 'prefix' => 'address'], function () {
+        Route::post('/', [\App\Http\Controllers\Shop\Address\AddressController::class, 'store'])
+            ->name('shop.address.store')
+            ->middleware(['permission:create-addresses']);
+        Route::patch('/', [\App\Http\Controllers\Shop\Address\AddressController::class, 'updateMainAddress'])
+            ->name('shop.mainAddress.update');
+    });
+
     Route::group(['namespace' => 'Catalog', 'prefix' => 'catalog'], function () {
         Route::get('/', 'IndexController')->name('shop.catalog.index');
     });

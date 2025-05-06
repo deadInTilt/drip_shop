@@ -6,6 +6,7 @@ use App\Events\OrderCancelled;
 use App\Events\OrderCreated;
 use App\Exceptions\Shop\Order\OrderCreateException;
 use App\Models\Order;
+use App\Models\User;
 use App\Repositories\Shop\CartRepository;
 use App\Repositories\Shop\OrderRepository;
 use App\Repositories\Shop\ProductRepository;
@@ -34,6 +35,8 @@ class OrderService
         try {
             $data = $request->validated();
             $user = $request->user();
+            $address = $request->user()->addresses->where('id', $data['address_id'])->first()->getFullAddressAttribute();
+            unset($data['address_id']);
 
             $cartItems = $this->cartRepository->getItemsForUser($user);
             $totalPrice = $this->cartRepository->getTotalPrice($cartItems);
@@ -44,6 +47,7 @@ class OrderService
 
             $orderData = array_merge($data, [
                 'user_id' => $user->id,
+                'address' => $address,
                 'name' => $user->name,
                 'email' => $user->email,
                 'total' => $totalPrice,
@@ -94,5 +98,10 @@ class OrderService
         $order->save();
 
         OrderCancelled::dispatch($order);
+    }
+
+    public function getOrdersForUser(User $user)
+    {
+        return Order::where('user_id', $user->id)->get();
     }
 }

@@ -20,8 +20,10 @@ class IndexController extends Controller
         $cartItems = $this->service->getCart($request);
         $totalPrice = $this->service->getTotalPrice($cartItems);
 
+        $addresses = $request->user()->addresses;
+
         $user = $request->user();
 
-        return view('shop.order.index', compact('cartItems', 'user', 'totalPrice'));
+        return view('shop.order.index', compact('cartItems', 'user', 'totalPrice', 'addresses'));
     }
 }

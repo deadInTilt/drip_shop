@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('street');
             $table->string('house');
             $table->string('postcode');
-            $table->boolean('is_main')->default(false);
+            $table->boolean('is_main')->default(true);
 
             $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete();
 

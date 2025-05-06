@@ -52,8 +52,12 @@
                                                 <tr>
                                                     <th colspan="1" class="shipping-title">Адрес</th>
                                                     <th colspan="1" class="shipping-title">
-                                                        <input type="text" name="address" value="{{ old('address') }}" class="form-control" required>
-                                                    @error('address')
+                                                        <select class="form-select" id="addressSelect" name="address_id">
+                                                            <option selected disabled>Выберите адрес</option>
+                                                            @foreach($addresses as $address)
+                                                                <option value="{{ $address->id }}">{{ $address->name }}</option>
+                                                            @endforeach
+                                                        </select>                                                    @error('address')
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                     </th>

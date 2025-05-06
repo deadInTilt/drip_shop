@@ -28,4 +28,5 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth:sanctum']], functio
 
 Route::group(['prefix' => 'payments', 'middleware' => ['auth:sanctum']], function () {
     Route::post('/callback', [\App\Http\Controllers\API\PaymentController::class, 'callback']);
+    Route::get('/status/{orderId}', [\App\Http\Controllers\API\PaymentController::class, 'orderStatus']);
 });

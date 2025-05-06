@@ -5,10 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    use AuthorizesRequests;
+
     public function callback(Request $request)
     {
         $order = Order::findOrFail($request->input('order_id'));
@@ -23,9 +26,11 @@ class PaymentController extends Controller
         }
     }
 
-    public function orderStatus(Request $request)
+    public function orderStatus($orderId)
     {
-        $order = Order::findOrFail($request->input('order_id'));
+        $order = Order::findOrFail($orderId);
+
+        $this->authorize('view', $order);
 
         return new OrderResource($order);
     }
