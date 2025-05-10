@@ -18,6 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasApiTokens;
+    use HasFactory;
 
     protected $table = 'users';
     protected $guarded = false;

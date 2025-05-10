@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasThumbnail;
+    use HasFactory;
 
     protected $table = 'categories';
     protected $guarded = false;

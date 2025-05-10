@@ -10,6 +10,8 @@ use PhpParser\Node\Expr\Array_;
 
 class Role extends Model
 {
+    use HasFactory;
+
     protected $table = 'roles';
     protected $guarded = false;
 
