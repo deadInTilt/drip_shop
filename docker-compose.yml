@@ -1,0 +1,66 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/app/Dockerfile
+        image: laravel-app
+        container_name: laravel-app
+        volumes:
+            - ./:/var/www
+        environment:
+            PHP_MEMORY_LIMIT: 512M
+        depends_on:
+            - redis
+            - rabbitmq
+            - db
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        depends_on:
+            - app
+
+    redis:
+        image: redis:7-alpine
+        ports:
+            - "6379:6379"
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+            - "5672:5672"     # основное соединение (AMQP)
+            - "15672:15672"   # веб-интерфейс RabbitMQ
+        environment:
+            RABBITMQ_DEFAULT_USER: guest
+            RABBITMQ_DEFAULT_PASS: guest
+
+    db:
+        image: mysql:8.0
+        container_name: mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: drip_shop
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "3306:3306"
+        volumes:
+            - dbdata:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        restart: always
+        ports:
+            - "8080:80"
+        environment:
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: root
+        depends_on:
+            - db
+volumes:
+    dbdata:
