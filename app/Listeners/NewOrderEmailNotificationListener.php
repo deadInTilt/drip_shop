@@ -6,7 +6,6 @@ use App\Events\OrderCreated;
 use App\Exceptions\Shop\Order\OrderNotificationMailException;
 use App\Mail\Shop\NewOrderNotificationMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
 class NewOrderEmailNotificationListener implements ShouldQueue

@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Shop\Cart;
 
 use App\Exceptions\Shop\Cart\ApplyCouponException;
-use App\Exceptions\Shop\Cart\InvalidCouponException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\Cart\CartRequest;
 use App\Http\Requests\Shop\Cart\CouponRequest;
-use App\Models\Coupon;
 use App\Services\Shop\Cart\CartService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    protected $service;
-
+    private CartService $service;
     public function __construct(CartService $service)
     {
         $this->service = $service;
@@ -33,14 +30,14 @@ class CartController extends Controller
     {
         $this->service->addItemToCart($request);
 
-        return redirect()->back()->with('success', 'Товар добавлен в корзину');
+        return back()->with('success', 'Товар добавлен в корзину');
     }
 
     public function removeItemFromCart(int $productId)
     {
         $this->service->removeItemFromCart($productId);
 
-        return redirect()->back()->with('success', 'Товар удален из корзины');
+        return back()->with('success', 'Товар удален из корзины');
     }
 
     public function applyCoupon(CouponRequest $request)

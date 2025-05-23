@@ -8,14 +8,9 @@ use App\Services\Shop\Order\OrderService;
 
 class StoreController extends Controller
 {
-    public function __construct(OrderService $service)
+    public function __invoke(OrderRequest $request, OrderService $service)
     {
-        $this->service = $service;
-    }
-
-    public function __invoke(OrderRequest $request)
-    {
-        $order = $this->service->create($request);
+        $order = $service->create($request);
 
         return redirect()->route('shop.payment.fake-gateway', [$order->id]);
     }

@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 class IndexController extends AbstractCatalogController
 {
     protected CatalogService $service;
+    protected CartRepository $cartRepository;
+    protected CatalogRepository $catalogRepository;
+    protected ViewedProductService $viewedService;
+
     public function __construct(CatalogService $service,
                                 CartRepository $cartRepository,
                                 CatalogRepository $catalogRepository,

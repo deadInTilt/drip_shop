@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers\Shop\Address;
 
+use App\Exceptions\Shop\Address\AddressException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\Address\AddressRequest;
-use App\Http\Requests\Shop\Cart\CartRequest;
 use App\Models\Address;
-use App\Services\Shop\Cart\CartService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
-    public function getAddresses(Request $request)
-    {
-        $addresses = $request->user()->addresses();
-        $mainAddress = $addresses->where('is_main', 1)->first();
-    }
-
-    public function store(AddressRequest $request)
+    public function store(AddressRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $data['user_id'] = $request->user()->id;
@@ -31,11 +25,11 @@ class AddressController extends Controller
 
             return redirect()->back();
         } catch (\Throwable $e) {
-            throw new \Exception($e->getMessage());
+            throw new AddressException('Ошибка при создании адреса.', 0, $e);
         }
     }
 
-    public function updateMainAddress(Request $request)
+    public function updateMainAddress(Request $request): RedirectResponse
     {
         $address = Address::findOrFail($request['address_id']);
 
@@ -52,7 +46,7 @@ class AddressController extends Controller
             return redirect()->back();
         } catch (\Throwable $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new AddressException('Ошибка при выборе основного адреса.', 0, $e);
         }
     }
 }

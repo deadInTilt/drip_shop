@@ -6,7 +6,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Shop\Cart\CartController;
 use App\Http\Controllers\Shop\Payment\FakeGatewayController;
 use App\Http\Controllers\Shop\Payment\PaymentController;
-use App\Http\Controllers\Shop\Product\IndexController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,7 +63,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
     });
 
     Route::group(['namespace' => 'Product', 'prefix' => 'product'], function () {
-        Route::get('/{product}', [IndexController::class, 'index'])->name('shop.product.index');
+        Route::get('/{product}', 'IndexController')->name('shop.product.index');
     });
 
     Route::group(['namespace' => 'Order', 'prefix' => 'order'], function () {
@@ -80,17 +79,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
         Route::get('/status/{orderId}', [PaymentController::class, 'status'])->name('shop.payment.status');
     });
 });
-
-Route::get('/storage/images/{dir}/{method}/{size}/{file}', InterventionImageController::class)
-     ->where('method', 'resize|crop|fit')
-     ->where('size', '\d+x\d+')
-     ->where('file', '.+\.(png|jpg|jpeg|gif|webp)$')
-     ->name('intervention-image');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin.index');
@@ -196,3 +184,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::delete('/{order}', 'DeleteController')->name('admin.order.delete')->middleware(['permission:delete-orders']);
     });
 });
+
+Route::get('/storage/images/{dir}/{method}/{size}/{file}', InterventionImageController::class)
+     ->where('method', 'resize|crop|fit')
+     ->where('size', '\d+x\d+')
+     ->where('file', '.+\.(png|jpg|jpeg|gif|webp)$')
+     ->name('intervention-image');
+
