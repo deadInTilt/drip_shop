@@ -545,5 +545,138 @@
             </div>
         </div>
         <!--End product-grid-->
+        <!-- recent-products Start -->
+        <section class="recent-products pb-120 overflow-hidden wow fadeInUp">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-12 wow fadeInUp animated">
+                        <div class="section-head text-center">
+                            <h2> Просмотренные товары </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-30 wow fadeInUp animated">
+                    <div class="catagory-slider">
+                        @foreach($viewedProducts as $product)
+                            <div class="col-xl-4 col-lg-6 col-6 ">
+                                <div class="products-three-single  wow w-100 ">
+                                    <div class="products-three-single-img">
+                                        <a href="{{ route('shop.product.index', $product->id) }}" class="d-block"> <img
+                                                src="{{ asset($product->makeThumbnail('1000x1200')) }}"
+                                                class="first-img" alt="" />
+                                            <img src="{{ asset($product->makeThumbnail('1000x1200')) }}"
+                                                 alt="" class="hover-img" />
+                                        </a>
+                                        <form action="{{ route('shop.cart.add') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="addcart btn--primary style2">Добавить в корзину</button>
+                                        </form>
+                                        <div class="products-grid__usefull-links">
+                                            <ul>
+                                                <li><a href="#0"> <i class="flaticon-heart"> </i> <span>
+                                                                            Избранное</span>
+                                                    </a> </li>
+                                                <li><a href="#popup2" class="popup_link"> <i
+                                                            class="flaticon-visibility"></i>
+                                                        <span> Быстрый просмотр</span>
+                                                    </a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--Quick View-->
+                                    <div id="popup2" class="product-gird__quick-view-popup mfp-hide">
+                                        <div class="container">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-lg-6">
+                                                    <div class="quick-view__left-content">
+                                                        <div class="tabs">
+                                                            <div class="popup-product-thumb-box">
+                                                                <ul>
+                                                                    <li
+                                                                        class="tab-nav popup-product-thumb ">
+                                                                        <a href="#tab9111111b"> <img
+                                                                                src="{{ asset('storage/') . '/' . $product->preview_image }}"
+                                                                                alt="" /> </a> </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="popup-product-main-image-box">
+                                                                <div id="tab9111111b"
+                                                                     class="tab-item popup-product-image">
+                                                                    <div
+                                                                        class="popup-product-single-image">
+                                                                        <img src="{{ asset('storage/') . '/' . $product->preview_image }}"
+                                                                             alt="" /> </div>
+                                                                </div> <button class="prev"> <i
+                                                                        class="flaticon-back"></i>
+                                                                </button> <button class="next"> <i
+                                                                        class="flaticon-next"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="popup-right-content">
+                                                        <h3>{{ $product->title }}</h3>
+                                                        <div class="ratting"> <i
+                                                                class="flaticon-star"></i> <i
+                                                                class="flaticon-star"></i> <i
+                                                                class="flaticon-star"></i> <i
+                                                                class="flaticon-star"></i> <i
+                                                                class="flaticon-star"></i>
+                                                            <span>(123)</span> </div>
+                                                        <p class="text"> {{ $product->description }} </p>
+                                                        <div class="price">
+                                                            <h2> {{ $product->price }} </h2>
+                                                            <h6>РУБ</h6>
+                                                            @if($product->quantity)
+                                                                <div class="product-quantity-check"> <i class="flaticon-select"></i>
+                                                                    <p>В наличии</p>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="color-varient"> <a href="#0"
+                                                                                       class="color-name pink">
+                                                                <span>Pink</span> </a> <a href="#0"
+                                                                                          class="color-name red"> <span>Red</span>
+                                                            </a> <a href="#0"
+                                                                    class="color-name yellow"><span>Yellow</span>
+                                                            </a> <a href="#0" class="color-name blue">
+                                                                <span>Blue</span> </a> <a href="#0"
+                                                                                          class="color-name black">
+                                                                <span>Black</span> </a> </div>
+                                                        <div class="add-product">
+                                                            <h6>Qty:</h6>
+                                                            <div class="button-group">
+                                                                <div class="qtySelector text-center">
+                                                                                    <span class="decreaseQty"><i
+                                                                                            class="flaticon-minus"></i>
+                                                                                    </span> <input type="number"
+                                                                                                   class="qtyValue" value="1" />
+                                                                    <span class="increaseQty"> <i
+                                                                            class="flaticon-plus"></i>
+                                                                                    </span> </div> <button
+                                                                    class="btn--primary "> Добавить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Quick View-->
+                                    <div class="products-three-single-content text-center"> <span> {{ $product->category->title }}</span>
+                                        <h5><a href="{{ route('shop.product.index', $product->id) }}">{{$product->title}}</a></h5>
+                                        <p>{{ $product->price }} РУБ </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section> <!-- recent-products End -->
     </main>
 @endsection

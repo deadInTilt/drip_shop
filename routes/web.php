@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Shop\Cart\CartController;
 use App\Http\Controllers\Shop\Payment\FakeGatewayController;
 use App\Http\Controllers\Shop\Payment\PaymentController;
+use App\Http\Controllers\Shop\Product\IndexController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,7 +64,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
     });
 
     Route::group(['namespace' => 'Product', 'prefix' => 'product'], function () {
-        Route::get('/{product}', 'IndexController')->name('shop.product.index');
+        Route::get('/{product}', [IndexController::class, 'index'])->name('shop.product.index');
     });
 
     Route::group(['namespace' => 'Order', 'prefix' => 'order'], function () {
