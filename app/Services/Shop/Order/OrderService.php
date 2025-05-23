@@ -5,6 +5,7 @@ namespace App\Services\Shop\Order;
 use App\Events\OrderCancelled;
 use App\Events\OrderCreated;
 use App\Exceptions\Shop\Order\OrderCreateException;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\User;
 use App\Repositories\Shop\CartRepository;
@@ -60,6 +61,11 @@ class OrderService
                 $this->productRepository->checkAndDecrementStock($item);
             }
 
+            if (session()->has('coupon_name')) {
+                $coupon = Coupon::where('name', session('coupon_name'))->first();
+                $coupon->increment('used');
+            }
+
             $order = $this->orderRepository->create($orderData);
             $this->orderRepository->addItemsToOrder($order, $cartItems);
             $this->cartRepository->clearCart($user);
@@ -72,16 +78,17 @@ class OrderService
                 'total' => $totalPrice,
             ]);
 
+            session()->forget([
+                'coupon_name',
+                'coupon_discount_percent',
+                'coupon_discount_fixed',
+            ]);
+
             return $order;
         } catch (\Throwable $e) {
             DB::rollBack();
             throw new OrderCreateException('Ошибка при создании заказа', 0, $e);
         }
-    }
-
-    public function initiatePayment(Order $order)
-    {
-        return redirect()->route('shop.payment.fake-gateway', [$order->id]);
     }
 
     public function paid(Order $order): void

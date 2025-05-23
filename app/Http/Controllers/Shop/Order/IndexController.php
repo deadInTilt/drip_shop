@@ -10,20 +10,21 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function __construct(CartService $service)
+    public function __construct(CartService $cartService)
     {
-        $this->service = $service;
+        $this->cartService = $cartService;
     }
 
     public function __invoke(Request $request)
     {
-        $cartItems = $this->service->getCart($request);
-        $totalPrice = $this->service->getTotalPrice($cartItems);
+        $cartItems = $this->cartService->getCart($request);
+        $totalPrice = $this->cartService->getTotalPrice($cartItems);
+        $discount = $this->cartService->getDiscount($totalPrice);
 
         $addresses = $request->user()->addresses;
 
         $user = $request->user();
 
-        return view('shop.order.index', compact('cartItems', 'user', 'totalPrice', 'addresses'));
+        return view('shop.order.index', compact('cartItems', 'user', 'totalPrice', 'addresses', 'discount'));
     }
 }

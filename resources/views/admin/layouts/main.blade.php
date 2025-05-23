@@ -240,6 +240,16 @@
                         </a>
                     </li>
                     @endcan
+                    @can('has-permission','view-coupons')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.coupon.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-percent"></i>
+                                <p>
+                                    Купоны
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('has-permission','view-brands')
                     <li class="nav-item">
                         <a href="{{ route('admin.group.index') }}" class="nav-link">

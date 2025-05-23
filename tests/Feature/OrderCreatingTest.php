@@ -20,7 +20,6 @@ class OrderCreatingTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
     public function test_user_can_create_order_from_cart()
     {
         $this->withoutExceptionHandling();
@@ -68,7 +67,6 @@ class OrderCreatingTest extends TestCase
         ]);
     }
 
-    /** @test */
     public function test_order_creation_fails_if_cart_is_empty()
     {
         $this->withoutExceptionHandling();

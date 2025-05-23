@@ -15,6 +15,8 @@ class BrandSeeder extends Seeder
             ['title' => 'New Balance', 'description' => 'New Balance'],
             ['title' => 'Puma', 'description' => 'Puma'],
             ['title' => 'Reebok', 'description' => 'Reebok'],
+            ['title' => 'Asics', 'description' => 'Asics'],
+
         ]);
     }
 }

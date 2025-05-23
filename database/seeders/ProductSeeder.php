@@ -12,7 +12,7 @@ class ProductSeeder extends Seeder
         Product::insert([
             ['title' => 'Nike Dunk Low Retro',
                 'description' => 'Кроссовки Nike Dunk Low Retro, созданные для игроков в баскетбол, но покорившие любителей уличного стиля, возвращаются с накладками из прочных материалов в классических расцветках. Эта баскетбольная модель 80-х годов с верхом из натуральной кожи дополнена перфорацией на мыске для активной циркуляции воздуха. Шнуровка с дополнительными люверсами позволяет регулировать плотность посадки. Резиновая подошва с цепким протектором минимизирует скольжение и делает каждый шаг более уверенным.',
-                'preview_image' => 'images/shoes/dunk green.jpg',
+                'preview_image' => 'images/shoes/dunk_green.jpg',
                 'quantity' => '10',
                 'price' => '11999.00',
                 'brand_id' => '1',
@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
 
             ['title' => 'Nike Air Force 1 Low',
                 'description' => 'Классические кроссовки от Nike, выполненные из натуральной кожи, с культовой подошвой Air для максимального комфорта и амортизации. Подходят как для повседневной носки, так и для активного отдыха.',
-                'preview_image' => 'images/shoes/1 white.jpg',
+                'preview_image' => 'images/shoes/1_white.jpg',
                 'quantity' => '1',
                 'price' => '9999.00',
                 'brand_id' => '1',
@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
 
             ['title' => 'Nike P-6000',
                 'description' => 'Кроссовки Nike P-6000, вдохновленные моделью Pegasus 25, имеют многослойный дизайн с беговой эстетикой 2000-х. Сетчатый текстильный верх хорошо пропускает воздух. Усиленная амортизация создается с помощью промежуточной подошвы из пеноматериала и мягкой стельки. За сцепление отвечает цепкий протектор на резиновой подметке.',
-                'preview_image' => 'images/shoes/p600 grey.jpg',
+                'preview_image' => 'images/shoes/p600_grey.jpg',
                 'quantity' => '10',
                 'price' => '10999.00',
                 'brand_id' => '1',
@@ -42,7 +42,7 @@ class ProductSeeder extends Seeder
 
             ['title' => 'Nike Air Max 90',
                 'description' => 'Мужские кроссовки Nike Air Max 90 Leather гарантируют полный комфорт благодаря амортизирующей вставке Max Air в области пятки и верху с накладками для поддержки в ключевых зонах. Верх с кожаными накладками обеспечивает поддержку и прочность. Полноразмерная промежуточная подошва из материала PU обеспечивает амортизацию и устойчивость. Резиновая вафельная подошва обеспечивает превосходное сцепление.',
-                'preview_image' => 'images/shoes/90 black.jpeg',
+                'preview_image' => 'images/shoes/90_black.jpeg',
                 'quantity' => '10',
                 'price' => '12999.00',
                 'brand_id' => '1',
@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
 
             ['title' => 'adidas Gazelle Indoor',
                 'description' => 'Кроссовки adidas Gazelle Indoor имеют все элементы, которые так любят фанаты около футбольной эстетики. Верх пары изготовлен из натуральной замши. Шнуровка отвечает за плотную посадку по стопе. Резиновая подошва с протектором создает уверенное сцепление. Модель плотно вошла в стритстайл и легко вписывается в любой аутфит.',
-                'preview_image' => 'images/shoes/gazel brown.jpg',
+                'preview_image' => 'images/shoes/gazel_brown.jpg',
                 'quantity' => '10',
                 'price' => '12999.00',
                 'brand_id' => '2',
@@ -62,7 +62,7 @@ class ProductSeeder extends Seeder
 
             ['title' => 'adidas Campus 00s',
                 'description' => 'Силуэт adidas Campus 00s вдохновлен скейтерскими кроссовками, которые были популярны в 2000-х. В современном стритстайле актуальность модели не уменьшается. Пара выполнена из натуральной замши. Шнуровка с дополнительными отверстиями обеспечивает плотную посадку. Мягкий язычок создает комфорт во время активной носки. Контрастные «три полоски» и логотип бренда отвечают за фирменный стиль.',
-                'preview_image' => 'images/shoes/campus grey.jpeg',
+                'preview_image' => 'images/shoes/campus_grey.jpeg',
                 'quantity' => '1',
                 'price' => '10999.00',
                 'brand_id' => '2',

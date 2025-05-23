@@ -2,8 +2,12 @@
 
 namespace App\Services\Shop\Cart;
 
+use App\Exceptions\Shop\Cart\ApplyCouponException;
 use App\Exceptions\Shop\Cart\CartItemOperationException;
+use App\Exceptions\Shop\Cart\InvalidCouponException;
 use App\Http\Requests\Shop\Cart\CartRequest;
+use App\Http\Requests\Shop\Cart\CouponRequest;
+use App\Models\Coupon;
 use App\Repositories\Shop\CartRepository;
 use App\Repositories\Shop\ProductRepository;
 use App\Services\Logger\LoggerInterface;
@@ -27,7 +31,25 @@ class CartService
 
     public function getTotalPrice($cartItems): float
     {
-        return $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
+        $subtotal = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
+        $discount = $this->getDiscount($subtotal);
+
+        $total = $subtotal - $discount;
+
+        return $total;
+    }
+
+    public function getDiscount($subtotal): float
+    {
+        $discount = 0;
+
+        if (session()->has('coupon_discount_percent')) {
+            $discount = round($subtotal * (session('coupon_discount_percent') / 100), 2);
+        } elseif (session()->has('coupon_discount_fixed')) {
+            $discount = session('coupon_discount_fixed');
+        }
+
+        return $discount;
     }
 
     public function getCart(Request $request): Collection
@@ -88,6 +110,32 @@ class CartService
 
         } catch (\Throwable $e) {
             throw new CartItemOperationException('Не удалось удалить товар из корзины', 0, $e);
+        }
+    }
+
+    public function applyCoupon(CouponRequest $request)
+    {
+        $data = $request->validated();
+
+        try {
+            $coupon = Coupon::where('name', $data['coupon_name'])->first();
+
+            if (!$coupon ||
+                ($coupon->expires_at && now()->greaterThan($coupon->expires_at)) ||
+                ($coupon->max_uses && $coupon->used >= $coupon->max_uses)) {
+
+                throw new InvalidCouponException('Недействительный купон.');
+            }
+
+            session([
+                'coupon_name' => $coupon->name,
+                'coupon_discount_percent' => $coupon->discount_percent,
+                'coupon_discount_fixed' => $coupon->discount_fixed,
+            ]);
+
+            return true;
+        } catch (\Throwable $e) {
+            throw new ApplyCouponException('Ошибка при применении купона', 0, $e);
         }
     }
 }

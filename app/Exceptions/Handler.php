@@ -30,24 +30,24 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e)
 {
     if ($request->expectsJson()) {
         return response()->json([
-            'message' => $exception instanceof NotFoundHttpException
+            'message' => $e instanceof NotFoundHttpException
                 ? 'Route not found'
-                : $exception->getMessage(),
-            'exception' => class_basename($exception),
-        ], $this->getStatusCode($exception));
+                : $e->getMessage(),
+            'exception' => class_basename($e),
+        ], $this->getStatusCode($e));
     }
 
-    return parent::render($request, $exception);
+    return parent::render($request, $e);
 }
 
-    private function getStatusCode(Throwable $exception): int
+    private function getStatusCode(Throwable $e): int
     {
-        if ($exception instanceof HttpExceptionInterface) {
-            return $exception->getStatusCode();
+        if ($e instanceof HttpExceptionInterface) {
+            return $e->getStatusCode();
         }
 
         return 500;

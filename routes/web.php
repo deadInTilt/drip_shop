@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\Product\ImportController;
+use App\Http\Controllers\InterventionImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Shop\Cart\CartController;
-use App\Http\Controllers\Shop\Catalog\IndexController;
 use App\Http\Controllers\Shop\Payment\FakeGatewayController;
 use App\Http\Controllers\Shop\Payment\PaymentController;
-use App\Http\Controllers\InterventionImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,6 +59,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Shop', 'middleware' => ['auth
         Route::get('/', [CartController::class, 'index'])->name('shop.cart.index');
         Route::post('/add', [CartController::class, 'addItemToCart'])->name('shop.cart.add');
         Route::delete('/{item}', [CartController::class, 'removeItemFromCart'])->name('shop.cart.remove');
+        Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('shop.cart.applyCoupon');
     });
 
     Route::group(['namespace' => 'Product', 'prefix' => 'product'], function () {
@@ -175,6 +175,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::get('/{group}/edit', 'EditController')->name('admin.group.edit')->middleware(['permission:edit-groups']);
         Route::patch('/{group}', 'UpdateController')->name('admin.group.update')->middleware(['permission:edit-groups']);
         Route::delete('/{group}', 'DeleteController')->name('admin.group.delete')->middleware(['permission:delete-groups']);
+    });
+
+    Route::group(['namespace' => 'Coupon', 'prefix' => 'coupons'], function () {
+        Route::get('/', 'IndexController')->name('admin.coupon.index')->middleware(['permission:view-coupons']);
+        Route::get('/create', 'CreateController')->name('admin.coupon.create')->middleware(['permission:create-coupons']);
+        Route::post('/', 'StoreController')->name('admin.coupon.store')->middleware(['permission:create-coupons']);
+        Route::get('/{coupon}', 'ShowController')->name('admin.coupon.show')->middleware(['permission:view-coupons']);
+        Route::get('/{coupon}/edit', 'EditController')->name('admin.coupon.edit')->middleware(['permission:edit-coupons']);
+        Route::patch('/{coupon}', 'UpdateController')->name('admin.coupon.update')->middleware(['permission:edit-coupons']);
+        Route::delete('/{coupon}', 'DeleteController')->name('admin.coupon.delete')->middleware(['permission:delete-coupons']);
     });
 
     Route::group(['namespace' => 'Order', 'prefix' => 'orders'], function () {

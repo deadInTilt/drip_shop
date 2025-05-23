@@ -3,12 +3,7 @@
 namespace App\Services\Shop\Catalog;
 
 use App\Http\Filters\CatalogFilter;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Group;
 use App\Models\Product;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class CatalogService
@@ -43,6 +38,6 @@ class CatalogService
             };
         }
 
-        return $query->paginate(6);
+        return $query->paginate(9);
     }
 }

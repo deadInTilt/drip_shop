@@ -88,14 +88,32 @@
                     <div class="col-xl-12">
                         <div class="cart-button-box">
                             <div class="apply-coupon wow fadeInUp animated">
-                                <div class="apply-coupon-input-box mt-30 "> <input type="text" name="coupon-code"
-                                                                                   value="" placeholder="Coupon Code"> </div>
-                                <div class="apply-coupon-button mt-30"> <button class="btn--primary style2"
-                                                                                type="submit">Применить купон</button> </div>
+                                <form action="{{ route('shop.cart.applyCoupon') }}" method="POST">
+                                    @csrf
+                                        <div class="apply-coupon-input-box mt-30 ">
+                                            <input type="text" name="coupon_name" value="" placeholder="Введите купон"></div>
+                                        <div class="apply-coupon-button mt-30">
+                                            <button class="btn--primary style2" type="submit">Применить купон</button>
+                                        </div>
+                                </form>
                             </div>
                             <div class="cart-button-box-right wow fadeInUp animated">
                                 <button class="btn--primary mt-30" type="submit"><a href="{{ route('shop.catalog.index') }}">Вернуться к покупкам</a></button>
                                 <button class="btn--primary mt-30" type="submit">Обновить корзину</button> </div>
+                        </div>
+                        <div class="cart-button-box mt-2">
+                            <div class="apply-coupon wow fadeInUp animated">
+                                @if(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if(session('coupon_error'))
+                                    <div class="alert alert-danger">
+                                        {{ session('coupon_error') }}
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,6 +131,32 @@
                         <div class="cart-check-out mt-30">
                             <h3>Подтверждение</h3>
                             <ul class="cart-check-out-list">
+                                <li>
+                                    <div class="left">
+                                        <p>Итого:</p>
+                                    </div>
+                                    <div class="right">
+                                        <p>{{ $totalPrice + $discount }}</p>
+                                    </div>
+                                </li>
+                                @if(session()->has('coupon_name'))
+                                <li>
+                                    <div class="left">
+                                        <p style="color:green">Применен купон:</p>
+                                    </div>
+                                    <div class="right">
+                                        <p style="color:green">{{ session('coupon_name') }}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left">
+                                        <p style="color:red">Скидка:</p>
+                                    </div>
+                                    <div class="right">
+                                        <p style="color:red">{{ $discount }}</p>
+                                    </div>
+                                </li>
+                                @endif
                                 <li>
                                     <div class="left">
                                         <p>Итого:</p>

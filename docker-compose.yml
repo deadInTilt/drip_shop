@@ -29,6 +29,7 @@ services:
         image: redis:7-alpine
         ports:
             - "6379:6379"
+        container_name: redis
 
     rabbitmq:
         image: rabbitmq:3-management
@@ -38,6 +39,7 @@ services:
         environment:
             RABBITMQ_DEFAULT_USER: guest
             RABBITMQ_DEFAULT_PASS: guest
+        container_name: rabbitmq
 
     db:
         image: mysql:8.0

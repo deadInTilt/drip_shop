@@ -110,10 +110,28 @@
                                     <ul class="cart-check-out-list">
                                         <li>
                                             <div class="left">
-                                                <p>Итого</p>
+                                                <p>Итого:</p>
                                             </div>
                                             <div class="right">
-                                                <p>{{ $totalPrice }}</p>
+                                                <p>{{ $totalPrice + $discount }}</p>
+                                            </div>
+                                        </li>
+                                        @if(session()->has('coupon_name'))
+                                            <li>
+                                                <div class="left">
+                                                    <p style="color:green">Применен купон:</p>
+                                                </div>
+                                                <div class="right">
+                                                    <p style="color:green">{{ session('coupon_name') }}</p>
+                                                </div>
+                                            </li>
+                                        @endif
+                                        <li>
+                                            <div class="left">
+                                                <p style="color:red">Скидка:</p>
+                                            </div>
+                                            <div class="right">
+                                                <p style="color:red">{{ $discount }}</p>
                                             </div>
                                         </li>
                                         <li>
@@ -121,7 +139,7 @@
                                                 <p>Доставка</p>
                                             </div>
                                             <div class="right">
-                                                <p><span>Фиксированная ставка:</span> 0.00</p>
+                                                <p>0.00</p>
                                             </div>
                                         </li>
                                         <li>

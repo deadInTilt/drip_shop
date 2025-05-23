@@ -20,7 +20,6 @@ class ProductCreationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
     public function test_product_can_be_created_and_stored_in_database(): void
     {
         $this->withoutExceptionHandling();

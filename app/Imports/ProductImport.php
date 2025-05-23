@@ -6,10 +6,11 @@ use App\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ProductImport implements ToModel, WithHeadingRow, WithValidation, ShouldQueue
+class ProductImport implements ToModel, WithHeadingRow, WithValidation, ShouldQueue, WithChunkReading
 {
     use Importable;
 
@@ -55,5 +56,10 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation, ShouldQu
             '*.price.required' => 'Название обязательно.',
             '*.price.integer' => 'Цена должна быть числом.'
         ];
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }

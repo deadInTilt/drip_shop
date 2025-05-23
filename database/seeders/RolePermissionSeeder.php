@@ -23,7 +23,8 @@ class RolePermissionSeeder extends Seeder
             'view-roles', 'create-roles', 'edit-roles', 'delete-roles',
             'view-colors', 'create-colors', 'edit-colors', 'delete-colors',
             'view-groups', 'create-groups', 'edit-groups', 'delete-groups',
-            'view-addresses', 'create-addresses', 'edit-addresses', 'delete-addresses'
+            'view-addresses', 'create-addresses', 'edit-addresses', 'delete-addresses',
+            'view-coupons', 'create-coupons', 'edit-coupons', 'delete-coupons'
         ];
 
         foreach ($permissions as $perm) {
@@ -42,7 +43,8 @@ class RolePermissionSeeder extends Seeder
             'view-products', 'create-products', 'edit-products', 'delete-products',
             'view-colors', 'create-colors', 'edit-colors', 'delete-colors',
             'view-groups', 'create-groups', 'edit-groups', 'delete-groups',
-            'view-addresses', 'create-addresses', 'edit-addresses', 'delete-addresses'
+            'view-addresses', 'create-addresses', 'edit-addresses', 'delete-addresses',
+            'view-coupons', 'create-coupons', 'edit-coupons', 'delete-coupons'
         ])->pluck('id')->toArray());
 
         $courier = Role::where('title', 'courier')->first();
