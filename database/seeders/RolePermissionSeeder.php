@@ -32,7 +32,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         $admin = Role::where('title', 'admin')->first();
-        $admin->permissions()->sync(Permission::all()->pluck('id'));
+        $admin->permissions()->sync(Permission::all()->pluck('id')->toArray());
 
         $manager = Role::where('title', 'manager')->first();
         $manager->permissions()->sync(Permission::whereIn('title', [
@@ -47,7 +47,12 @@ class RolePermissionSeeder extends Seeder
             'view-coupons', 'create-coupons', 'edit-coupons', 'delete-coupons'
         ])->pluck('id')->toArray());
 
+        $customer = Role::where('title', 'customer')->first();
+        $customer->permissions()->sync(Permission::whereIn('title', [
+            'view-addresses', 'create-addresses', 'edit-addresses', 'delete-addresses',
+        ])->pluck('id')->toArray());
+
         $courier = Role::where('title', 'courier')->first();
-        $courier->permissions()->sync(Permission::where('title', 'view-orders')->pluck('id'));
+        $courier->permissions()->sync(Permission::where('title', 'view-orders')->pluck('id')->toArray());
     }
 }

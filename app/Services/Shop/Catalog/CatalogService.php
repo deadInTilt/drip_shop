@@ -12,7 +12,8 @@ class CatalogService
     public function getFilteredAndSortedProducts(Request $request)
     {
         $filter = new CatalogFilter($request->query());
-        $query = Product::filter($filter);
+        $query = Product::filter($filter)
+                        ->with('category');
 
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
