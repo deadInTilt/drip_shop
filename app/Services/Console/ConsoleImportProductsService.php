@@ -2,7 +2,6 @@
 
 namespace App\Services\Console;
 
-use App\Exceptions\Shop\Console\ConsoleProductImportException;
 use App\Exceptions\Shop\Console\MissingRequiredFieldException;
 use App\Exceptions\Shop\Console\OptionalParamsNotFoundException;
 use App\Exceptions\Shop\Console\ProductNotFoundException;
@@ -14,12 +13,12 @@ use App\Models\Color;
 use App\Models\Group;
 use App\Models\Product;
 use App\Models\Tag;
-use App\Services\Logger\FileLogger;
+use App\Services\Logger\ImportLogger;
 use Illuminate\Support\Facades\DB;
 
 class ConsoleImportProductsService
 {
-    public function __construct(protected FileLogger $logger)
+    public function __construct(protected ImportLogger $logger)
     {
     }
 
