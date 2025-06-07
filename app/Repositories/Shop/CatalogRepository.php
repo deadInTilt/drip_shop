@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Cache;
 
 class CatalogRepository
 {
-    public function getProducts()
-    {
-        return Product::all();
-    }
-
     public function getCategories()
     {
         return Cache::remember('catalog:categories', now()->addMinutes(60), function () {
