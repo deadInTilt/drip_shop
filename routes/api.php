@@ -30,3 +30,9 @@ Route::group(['prefix' => 'payments', 'middleware' => ['auth:sanctum']], functio
     Route::post('/callback', [\App\Http\Controllers\API\PaymentController::class, 'callback']);
     Route::get('/status/{orderId}', [\App\Http\Controllers\API\PaymentController::class, 'orderStatus']);
 });
+
+Route::group(['prefix' => '/wishlist', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [\App\Http\Controllers\API\WishlistController::class, 'index'])->name('api.wishlist');
+    Route::post('/', [\App\Http\Controllers\API\WishlistController::class, 'store'])->name('api.wishlist.addItem');
+    Route::delete('/', [\App\Http\Controllers\API\WishlistController::class, 'destroy'])->name('api.wishlist.deleteItem');
+});
